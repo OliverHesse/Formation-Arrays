@@ -1,20 +1,31 @@
 package net.Lucent.FormationArrays.formations.data_channels;
 
+import net.Lucent.FormationArrays.blocks.block_entities.formation_cores.AbstractFormationCoreBlockEntity;
 import net.Lucent.FormationArrays.formations.AbstractFormationNode;
+import net.Lucent.FormationArrays.formations.FormationRuntimeData;
 
 import java.util.Optional;
 
 public class DataChannel<T> {
 
     public final T defaultValue;
+    public String socketId;
+    public int formationId;
+    public AbstractFormationCoreBlockEntity core;
     public DataChannel(T defaultValue){
         this.defaultValue = defaultValue;
+    }
+    public DataChannel(T defaultValue,String socketId,int formationId,AbstractFormationCoreBlockEntity core){
+        this.defaultValue = defaultValue;
+        this.core = core;
+        this.socketId = socketId;
+        this.formationId = formationId;
 
     }
-    public T querySocket(String socketId, AbstractFormationNode node) {
+    public T querySocket(){
 
         try{
-            return (T) node.getOutputSocket(socketId).getData();
+            return (T) core.getOutputSocket(socketId,formationId).getData();
         }catch (Exception e){
             return this.defaultValue;
         }

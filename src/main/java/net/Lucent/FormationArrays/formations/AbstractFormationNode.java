@@ -36,5 +36,5 @@ public abstract class AbstractFormationNode {
         return qiTypeDrain.get(id);
     }
 
-    protected abstract void run(FormationRuntimeData runtimeData);
+    public abstract void run(FormationRuntimeData runtimeData);
 }

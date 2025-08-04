@@ -114,7 +114,7 @@ public class FormationArrays
         AbstractFormationNode node = new AbstractFormationNode(){
 
             @Override
-            protected void run(FormationRuntimeData runtimeData) {
+            public void run(FormationRuntimeData runtimeData) {
 
             }
         };
