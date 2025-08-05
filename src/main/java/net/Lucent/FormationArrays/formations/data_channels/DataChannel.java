@@ -5,17 +5,18 @@ import net.Lucent.FormationArrays.formations.AbstractFormationNode;
 import net.Lucent.FormationArrays.formations.FormationRuntimeData;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class DataChannel<T> {
 
     public final T defaultValue;
     public String socketId;
-    public int formationId;
+    public UUID formationId;
     public AbstractFormationCoreBlockEntity core;
     public DataChannel(T defaultValue){
         this.defaultValue = defaultValue;
     }
-    public DataChannel(T defaultValue,String socketId,int formationId,AbstractFormationCoreBlockEntity core){
+    public DataChannel(T defaultValue,String socketId,UUID formationId,AbstractFormationCoreBlockEntity core){
         this.defaultValue = defaultValue;
         this.core = core;
         this.socketId = socketId;
