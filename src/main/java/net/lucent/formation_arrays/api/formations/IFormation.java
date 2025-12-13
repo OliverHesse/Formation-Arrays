@@ -18,6 +18,5 @@ public interface IFormation {
     List<FormationFlagConditionData> getFormationFlagConditions();
     Component getFormationTitle();
     Component getFormationDescription();
-    String getOwnerId();
-    int getPermissionLevel();
+
 }

@@ -4,7 +4,9 @@ import net.lucent.formation_arrays.blocks.block_entities.ModBlockEntities;
 import net.lucent.formation_arrays.data_components.ModDataComponents;
 import net.lucent.formation_arrays.items.ModItems;
 
+import net.lucent.formation_arrays.util.CoreManager;
 import net.lucent.formation_arrays.util.ModCreativeModeTabs;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -25,10 +27,20 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(FormationArrays.MOD_ID)
 public class FormationArrays
 {
+
+    private static CoreManager CORE_MANAGER = new CoreManager(); // World ID -> SectManager
+
+    public static CoreManager getCoreManager() {
+        return CORE_MANAGER;
+    }
+
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "formation_arrays";
     // Directly reference a slf4j logger
@@ -47,7 +59,7 @@ public class FormationArrays
     public FormationArrays(IEventBus modEventBus, ModContainer modContainer)
     {
         // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
+
         registrations(modEventBus);
 
 
@@ -57,51 +69,23 @@ public class FormationArrays
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
 
-        // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
 
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
-    }
-
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
-
-    }
-
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
-        // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
+    public void onServerStarting(ServerStartingEvent event) {
+        CORE_MANAGER =  CoreManager.get(event.getServer());
     }
 
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-        }
+    @SubscribeEvent
+    public void onServerStopping(ServerStoppingEvent event) {
+        CORE_MANAGER.save();
     }
+
+
+
+
 }

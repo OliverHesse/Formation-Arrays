@@ -8,4 +8,6 @@ public interface IFormationCore {
 
 
     FormationPort<?> getFormationPort(UUID formationId,String portId,String portType);
+    String getOwnerId();
+    int getPermissionLevel();
 }
