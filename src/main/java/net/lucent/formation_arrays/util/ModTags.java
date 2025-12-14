@@ -13,11 +13,16 @@ public class ModTags {
         public static final TagKey<Block> ARRAY_FLAG = createTag("array_flag");
         public static final TagKey<Block> FORMATION_CORE = createTag("formation_core");
 
+
         private static TagKey<Block> createTag(String name){
             return BlockTags.create(ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID, name));
         }
     }
     public static class Items{
+
+        public static final TagKey<Item> JADE_SLIP = createTag("jade_slip");
+        public static final TagKey<Item> FORMATION_CORE_FUEL = createTag("formation_core_fuel");
+
         private static TagKey<Item> createTag(String name){
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID, name));
         }

@@ -1,8 +1,11 @@
 package net.lucent.formation_arrays.api.formations.node;
 
+import net.lucent.formation_arrays.api.cores.IFormationCore;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 
+import java.math.BigInteger;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,7 +35,11 @@ public interface IFormationNode {
         if(!hasPort(port)) return Optional.empty();
         return Optional.of(getFormationPort(port).run());
     };
-
-    void run();
-    double getEnergyCost();
+    /**
+     *  origin -> the core
+     *  yes they could probably get core from level.getBlockEntity but i feel this is better
+     */
+    void run(IFormationCore formationCore, Level level, BlockPos origin);
+    UUID getFormationId();
+    BigInteger getEnergyCost();
 }

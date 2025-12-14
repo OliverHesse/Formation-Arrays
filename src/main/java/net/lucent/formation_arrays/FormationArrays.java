@@ -7,7 +7,8 @@ import net.lucent.formation_arrays.items.ModItems;
 import net.lucent.formation_arrays.util.CoreManager;
 import net.lucent.formation_arrays.util.ModCreativeModeTabs;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 
 import com.mojang.logging.LogUtils;
 
@@ -26,6 +27,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +46,8 @@ public class FormationArrays
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "formation_arrays";
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+
 
     public void registrations(IEventBus modEventBus){
 

@@ -1,7 +1,10 @@
 package net.lucent.formation_arrays.formations.connections;
 
+import net.lucent.formation_arrays.FormationArrays;
 import net.lucent.formation_arrays.api.cores.IFormationCore;
+import net.lucent.formation_arrays.api.formations.node.FormationPort;
 import net.lucent.formation_arrays.api.formations.node.IFormationConnection;
+import net.lucent.formation_arrays.util.LoggerUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
@@ -83,7 +86,11 @@ public class DefaultFormationConnection<T> implements IFormationConnection<T> {
         if(level.isClientSide()) return null;
         BlockEntity potentialCore = level.getBlockEntity(coreLocation);
         if(!(potentialCore instanceof IFormationCore formationCore)) return null;
-        T data = (T) formationCore.getFormationPort(formationId,port,type).run(); // i want this to crash if something goes wrong, although potentialy add logging
+
+        FormationPort<?> formationPort = formationCore.getFormationPort(formationId,port,type);
+        if(!formationPort.portType().equals(type)) LoggerUtils.portTypeMismatch(port,name.getString(),coreLocation);
+
+        T data = (T) formationPort.run(); // i want this to crash if something goes wrong, although potentially add logging
         if(data == null) return defaultValue;
         return data;
     }
