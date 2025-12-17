@@ -9,8 +9,10 @@ public interface ICoreEnergyContainer{
 
 
     int getCurrentEnergy();
-
-
+    int getMaxEnergy();
+    default double getEnergyPercent(){
+        return ((double) getCurrentEnergy()/(double) getMaxEnergy())*100;
+    }
     void increaseEnergy(int amount);
 
 

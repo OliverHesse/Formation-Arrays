@@ -1,4 +1,4 @@
-package net.lucent.formation_arrays.ui.elements;
+package net.lucent.formation_arrays.gui.elements;
 
 import net.lucent.easygui.elements.controls.buttons.AbstractButton;
 import net.minecraft.client.gui.GuiGraphics;

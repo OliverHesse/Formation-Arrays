@@ -1,18 +1,13 @@
-package net.lucent.formation_arrays.ui.elements;
+package net.lucent.formation_arrays.gui.elements;
 
-import net.lucent.easygui.elements.containers.panels.Panel;
 import net.lucent.easygui.elements.containers.scroll_boxes.DynamicScrollBox;
-import net.lucent.easygui.elements.containers.scroll_boxes.FixedSizedScrollBox;
 import net.lucent.easygui.elements.other.Image;
 import net.lucent.easygui.interfaces.IEasyGuiScreen;
-import net.lucent.easygui.interfaces.ITextureData;
 import net.lucent.easygui.util.textures.TextureData;
 import net.lucent.formation_arrays.FormationArrays;
 import net.lucent.formation_arrays.blocks.block_entities.formation_cores.AbstractFormationCoreBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-
-import java.math.BigDecimal;
 
 public class FormationCoreQiStorageImage extends Image {
     public AbstractFormationCoreBlockEntity formationCoreBlock;

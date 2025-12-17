@@ -98,4 +98,13 @@ public class PlayerAccessControlToken extends Item implements IAccessControlToke
     public boolean isLinked(ItemStack controlToken) {
         return controlToken.has(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT);
     }
+
+    @Override
+    public List<Player> filterPlayerList(ItemStack controlToken, List<Player> playerList) {
+        if(controlToken.has(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT)) return List.of();
+        for (Player player : playerList){
+            if(player.getUUID().toString().equals(controlToken.get(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT).owner())) return List.of(player);
+        }
+        return List.of();
+    }
 }

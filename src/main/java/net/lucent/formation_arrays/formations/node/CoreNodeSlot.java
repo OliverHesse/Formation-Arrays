@@ -4,8 +4,10 @@ import net.lucent.formation_arrays.api.formations.node.IFormationNode;
 import net.lucent.formation_arrays.api.items.IFormationHolder;
 import net.minecraft.world.item.ItemStack;
 
-public record CoreNodeSlot(int slot,ItemStack itemStack, IFormationNode node) {
-    public static CoreNodeSlot fromItemStack(int slot,ItemStack itemStack){
-        return new CoreNodeSlot(slot,itemStack,((IFormationHolder)itemStack.getItem()).getFormation().getNewFormationNode());
+import java.util.UUID;
+
+public record CoreNodeSlot(UUID uuid, ItemStack itemStack, IFormationNode node) {
+    public static CoreNodeSlot fromItemStack(UUID uuid,ItemStack itemStack){
+        return new CoreNodeSlot(uuid,itemStack,((IFormationHolder)itemStack.getItem()).getFormation().getNewFormationNode());
     }
 }

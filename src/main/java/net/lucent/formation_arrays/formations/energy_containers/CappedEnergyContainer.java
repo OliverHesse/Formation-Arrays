@@ -20,6 +20,11 @@ public class CappedEnergyContainer implements ICoreEnergyContainer {
         return currentEnergy;
     }
 
+    @Override
+    public int getMaxEnergy() {
+        return MAX_ENERGY;
+    }
+
 
     @Override
     public void increaseEnergy(int amount) {

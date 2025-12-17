@@ -17,6 +17,7 @@ version = mod_version
 group = mod_group_id
 
 repositories {
+    maven { url 'https://jitpack.io/' }
     mavenLocal()
 }
 
@@ -114,7 +115,7 @@ configurations {
 dependencies {
 
     //implementation "net.lucent.easygui:easy_gui_1.21.1:1.0.7"
-    implementation 'com.github.OliverHesse:EasyGui:86eb8fff0a'
+    implementation 'com.github.OliverHesse:EasyGui:2e57662753'
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

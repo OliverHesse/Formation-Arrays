@@ -1,0 +1,2 @@
+get formation core inventory ui set up
+get formation node port linking ui set up

@@ -6,9 +6,11 @@ import net.lucent.formation_arrays.api.cores.IFormationCore;
 
 import net.lucent.formation_arrays.api.formations.node.FormationPort;
 import net.lucent.formation_arrays.api.formations.node.IFormationNode;
+import net.lucent.formation_arrays.api.items.IAccessControlToken;
 import net.lucent.formation_arrays.formations.FormationCoreItemStackHandler;
 import net.lucent.formation_arrays.formations.node.CoreNodeSlot;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,60 +28,69 @@ import java.util.UUID;
  * */
 public abstract class AbstractFormationCoreBlockEntity extends BlockEntity implements IFormationCore {
 
-    private final HashMap<UUID, CoreNodeSlot> formationNodes = new HashMap<>();
-    private final List<UUID> formationNodesToRemove = new ArrayList<>();
-    private final HashMap<UUID,CoreNodeSlot> formationNodesToAdd = new HashMap<>();
+    private final CoreNodeSlot[] formationNodeSlots;
+    private final HashMap<UUID,Integer> idSlotMap = new HashMap<>();
 
     private final ICoreEnergyContainer energyContainer;
     private final FormationCoreItemStackHandler formationItemStackHandler;
+    public ContainerData dataSlot = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return switch (index){
+                case 0 ->  (int)energyContainer.getEnergyPercent();
+                default -> 0;
+            };
+        }
+
+        @Override
+        public void set(int index, int value) {
+
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
+    };
     public AbstractFormationCoreBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, ICoreEnergyContainer energyContainer,FormationCoreItemStackHandler itemStackHandler) {
         super(type, pos, blockState);
         this.energyContainer = energyContainer;
         this.formationItemStackHandler = itemStackHandler;
+        formationNodeSlots = new CoreNodeSlot[itemStackHandler.MAX_FORMATIONS];
     }
 
-    public void clearRemoveQueue(){
-        for(UUID oldId : formationNodesToRemove){
-            formationNodes.remove(oldId);
+    public FormationCoreItemStackHandler getFormationItemStackHandler(){
+        return formationItemStackHandler;
+    }
+    public void clearFormationSlot(int slot){
+        idSlotMap.remove(formationNodeSlots[slot].uuid());
+        formationNodeSlots[slot] = null;
+    }
+    public void updateFormationSlot(int slot){
+        ItemStack itemStack = formationItemStackHandler.getFormationItemStack(slot);
+        if(itemStack.equals(ItemStack.EMPTY)) {
+            clearFormationSlot(slot);
+            return;
         }
-        formationNodesToRemove.clear();
-    }
-    public void clearInclusionMap(){
-        for(UUID nodeSlot : formationNodesToAdd.keySet()){
-            formationNodes.put(
-                    nodeSlot,
-                    formationNodesToAdd.get(nodeSlot)
-            );
-        }
-        formationNodesToRemove.clear();
-    }
-
-    public void updateFormationSlot(UUID oldUUID){
-        CoreNodeSlot oldSlot = formationNodes.get(oldUUID);
-        formationNodesToRemove.add(oldUUID);
-        formationNodesToAdd.put(
-                UUID.randomUUID(),
-                CoreNodeSlot.fromItemStack(
-                        oldSlot.slot(),
-                        formationItemStackHandler.getFormationItemStack(oldSlot.slot())
-                )
-        );
-
+        if(itemStack == formationNodeSlots[slot].itemStack()) return;
+        clearFormationSlot(slot);
+        formationNodeSlots[slot] = CoreNodeSlot.fromItemStack(UUID.randomUUID(),itemStack);
+        idSlotMap.put(formationNodeSlots[slot].uuid(),slot);
     }
     public void run(Level level){
-        for(UUID formationId : formationNodes.keySet()){
-            if(isFormationSlotValid(formationId)){
-                tryRunFormation(formationId,level);
+        if(energyContainer.isEmpty()) return;
+        for(int i = 0;i<formationNodeSlots.length;i++){
+            if(isFormationSlotValid(i)){
+                tryRunFormation(i,level);
             }
         }
+
     }
-    public boolean isFormationSlotValid(UUID formationUUID){
-        if(!formationNodes.containsKey(formationUUID))return false;
-        CoreNodeSlot nodeSlot = formationNodes.get(formationUUID);
-        if(formationItemStackHandler.getFormationItemStack(nodeSlot.slot()) == nodeSlot.itemStack()) return true;
-        updateFormationSlot(formationUUID);
-        return false;
+    public boolean isFormationSlotValid(int slot){
+        updateFormationSlot(slot);
+        return formationNodeSlots[slot] != null;
     }
+
 
     @Override
     public ICoreEnergyContainer getEnergyContainer() {
@@ -87,48 +98,53 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
     }
 
 
-    public void runFormations(Level level){
-        if(energyContainer.isEmpty()) return;
-        for(UUID formationId : formationNodes.keySet()){
-            tryRunFormation(formationId,level);
+
+    private void tryRunFormation(int slot, Level level){
+        if(tryBurnEnergy(getFormationNode(slot).getEnergyCost())){
+            getFormationNode(slot).run(this,level,this.getBlockPos());
         }
     }
 
-    private void tryRunFormation(UUID formation, Level level){
-        if(tryBurnEnergy(getFormationNode(formation).getEnergyCost())){
-            getFormationNode(formation).run(this,level,this.getBlockPos());
-        }
-    }
 
-    public void removeFormationNode(UUID id){
-        formationNodes.remove(id);
-    };
+
+
 
     public IFormationNode getFormationNode(UUID id){
-        return formationNodes.get(id).node();
+        return getFormationNode(idSlotMap.get(id));
     }
 
+    public IFormationNode getFormationNode(int slot){
+        return formationNodeSlots[slot].node();
+    }
 
-
+    @Override
     public FormationPort<?> getFormationPort(UUID formationId, String portId, String portType){
-        if(!formationNodes.containsKey(formationId)) return null;
+        if(!idSlotMap.containsKey(formationId)) return null;
         return getFormationNode(formationId).getFormationPort(portId);
     }
-    //TODO
+
+    @Override
     public ItemStack getFormationItemStack(UUID formation){
-        return null;
+        return formationItemStackHandler.getFormationItemStack(idSlotMap.get(formation));
     }
-    //TODO
+
+    @Override
     public List<ItemStack> getFormationJadeSlips(UUID formation){
-        return null;
+        return formationItemStackHandler.getFormationJadeSlips(idSlotMap.get(formation));
     }
-    //TODO
+
+    @Override
     public String getOwnerId(){
-        return null;
+        return ((IAccessControlToken)formationItemStackHandler.getControlToken().getItem()).getOwnerId(formationItemStackHandler.getControlToken());
     }
-    //TODO
+
+    @Override
     public int getPermissionLevel(){
-        return 0;
+        return ((IAccessControlToken)formationItemStackHandler.getControlToken().getItem()).getPermissionLevel(formationItemStackHandler.getControlToken());
     }
+
+
+    public void tick(Level level, BlockPos blockPos, BlockState blockState){}
+
 
 }

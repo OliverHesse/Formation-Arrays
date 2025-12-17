@@ -2,11 +2,13 @@ package net.lucent.formation_arrays.blocks;
 
 import net.lucent.formation_arrays.FormationArrays;
 import net.lucent.formation_arrays.blocks.block_entities.ModBlockEntities;
+import net.lucent.formation_arrays.blocks.block_entities.formation_cores.Tier1FormationCoreBlockEntity;
 import net.lucent.formation_arrays.blocks.blocks.BaseFormationCoreEntityBlock;
 import net.lucent.formation_arrays.items.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -18,6 +20,12 @@ public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(FormationArrays.MOD_ID);
 
 
+    public static final DeferredBlock<Block> TIER_1_FORMATION_CORE = registerBlock("tier_1_formation_core",
+            () -> new BaseFormationCoreEntityBlock(BlockBehaviour.Properties.of()
+                    .strength(2f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.ANVIL)
+                    .noOcclusion(), (blockPos,blockState)->ModBlockEntities.TIER_1_FORMATION_CORE_BE.get().create(blockPos,blockState)));
 
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
