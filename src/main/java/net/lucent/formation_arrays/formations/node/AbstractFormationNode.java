@@ -1,12 +1,16 @@
-package net.lucent.formation_arrays.api.formations.node;
+package net.lucent.formation_arrays.formations.node;
 
+
+import net.lucent.formation_arrays.api.formations.node.FormationPort;
+import net.lucent.formation_arrays.api.formations.node.IFormationConnection;
+import net.lucent.formation_arrays.api.formations.node.IFormationNode;
 
 import java.util.HashMap;
 
 public abstract class AbstractFormationNode implements IFormationNode {
 
     private final HashMap<String, IFormationConnection<?>> formationConnection = new HashMap<>();
-    private final HashMap<String,FormationPort<?>> formationPorts = new HashMap<>();
+    private final HashMap<String, FormationPort<?>> formationPorts = new HashMap<>();
 
 
     @Override

@@ -41,5 +41,15 @@ public interface IFormationNode {
      */
     void run(IFormationCore formationCore, Level level, BlockPos origin);
     UUID getFormationId();
-    BigInteger getEnergyCost();
+    int getEnergyCost();
+
+    /**
+     * used when a formation needs to burn extra energy during operation
+     * @param core the core to burn energy from
+     * @param energy how much energy
+     * @return true if able to burn false otherwise
+     */
+    default boolean tryBurnEnergy(IFormationCore core,int energy){
+        return core.tryBurnEnergy(energy);
+    }
 }
