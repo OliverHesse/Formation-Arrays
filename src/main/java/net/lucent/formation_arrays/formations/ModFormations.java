@@ -19,10 +19,11 @@ public class ModFormations {
     public static final DeferredRegister<IFormation> FORMATIONS = DeferredRegister.create(FormationRegistry.FORMATION_REGISTRY, FormationArrays.MOD_ID);
 
     public static final DeferredHolder<IFormation,  ? extends GenericFormation> TEST = FORMATIONS.register("test",
-            ()->new GenericFormation((blockPos,uuid)->
+            ()->new GenericFormation(Component.literal("TEST FORMATION"),(blockPos,uuid)->
             {
 
                 FormationNode node = new FormationNode();
+                node.setFormationId(uuid);
                 node.addFormationConnection("grab_data",
                         new DefaultFormationConnection<>(
                                 blockPos,
@@ -49,7 +50,9 @@ public class ModFormations {
                                 (level)->2.0));
                 return node;
                 }
-            ));
+            )
+
+    );
 
 
     public static void register(IEventBus eventBus){

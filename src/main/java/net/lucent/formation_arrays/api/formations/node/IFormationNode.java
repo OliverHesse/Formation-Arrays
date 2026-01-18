@@ -44,6 +44,7 @@ public interface IFormationNode {
      */
     void run(IFormationCore formationCore, Level level, BlockPos origin);
     UUID getFormationId();
+    void setFormationId(UUID id);
     int getEnergyCost();
 
     /**

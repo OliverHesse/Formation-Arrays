@@ -2,6 +2,7 @@ package net.lucent.formation_arrays.api.cores;
 
 import net.lucent.formation_arrays.api.formations.node.IFormationNode;
 import net.lucent.formation_arrays.api.formations.node.IFormationPort;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public interface IFormationCore {
     List<IFormationNode> getFormationNodes();
     List<UUID> getFormationNodeIDs();
     IFormationNode getFormationNode(UUID formationId);
+    ResourceLocation getFormationRegistryId(UUID formationId);
     IFormationPort<?> getFormationPort(UUID formationId, String portId, String portType);
     ICoreEnergyContainer getEnergyContainer();
     ItemStack getFormationItemStack(UUID formation);

@@ -14,9 +14,11 @@ public class GenericFormation implements IFormation {
     public interface IFormationNodeSupplier{
         IFormationNode run(BlockPos pos,UUID formationId);
     }
+    Component displayName;
     IFormationNodeSupplier supplier;
-    public GenericFormation(IFormationNodeSupplier supplier){
+    public GenericFormation(Component displayName,IFormationNodeSupplier supplier){
         this.supplier = supplier;
+        this.displayName = displayName;
     }
 
     @Override
@@ -31,7 +33,7 @@ public class GenericFormation implements IFormation {
 
     @Override
     public Component getFormationTitle() {
-        return null;
+        return displayName;
     }
 
     @Override

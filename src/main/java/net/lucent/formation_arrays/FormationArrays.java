@@ -1,6 +1,7 @@
 package net.lucent.formation_arrays;
 import net.lucent.formation_arrays.blocks.ModBlocks;
 import net.lucent.formation_arrays.blocks.block_entities.ModBlockEntities;
+import net.lucent.formation_arrays.capabilities.ModCapabilities;
 import net.lucent.formation_arrays.data_components.ModDataComponents;
 import net.lucent.formation_arrays.formations.ModFormations;
 import net.lucent.formation_arrays.gui.ModMenuTypes;
@@ -10,6 +11,7 @@ import net.lucent.formation_arrays.network.ModPayloads;
 import net.lucent.formation_arrays.util.core_managers.ClientCoreManager;
 import net.lucent.formation_arrays.util.core_managers.CoreManager;
 import net.lucent.formation_arrays.util.ModCreativeModeTabs;
+import net.lucent.formation_arrays.util.formation_holder.ClientFormationHolder;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -36,15 +38,18 @@ public class FormationArrays
 
     private static CoreManager CORE_MANAGER = new CoreManager(); // World ID -> SectManager
     private static ClientCoreManager CLIENT_CORE_MANAGER = new ClientCoreManager();
-
+    private static ClientFormationHolder CLIENT_FORMATION_HOLDER = new ClientFormationHolder();
     public static CoreManager getCoreManager() {
         return CORE_MANAGER;
     }
 
-    @OnlyIn(Dist.CLIENT)
+
     public static ClientCoreManager getClientCoreManager(){return CLIENT_CORE_MANAGER;}
+    public static ClientFormationHolder getClientFormationHolder(){return CLIENT_FORMATION_HOLDER;}
     @OnlyIn(Dist.CLIENT)
     public static void createClientCoreManager(){CLIENT_CORE_MANAGER = new ClientCoreManager();}
+    @OnlyIn(Dist.CLIENT)
+    public static void createClientFormationHolder(){CLIENT_FORMATION_HOLDER = new ClientFormationHolder();}
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "formation_arrays";
     // Directly reference a slf4j logger
@@ -75,7 +80,6 @@ public class FormationArrays
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
-
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);

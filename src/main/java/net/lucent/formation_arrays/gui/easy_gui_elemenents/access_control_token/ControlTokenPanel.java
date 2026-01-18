@@ -7,7 +7,8 @@ import net.lucent.easygui.interfaces.ITextureData;
 import net.lucent.easygui.properties.Positioning;
 import net.lucent.easygui.util.textures.TextureDataSubSection;
 import net.lucent.formation_arrays.FormationArrays;
-import net.lucent.formation_arrays.api.items.IAccessControlToken;
+import net.lucent.formation_arrays.api.capability.IAccessControlToken;
+import net.lucent.formation_arrays.capabilities.ModCapabilities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -48,7 +49,9 @@ public class ControlTokenPanel extends EmptyContainer {
         super.renderSelf(guiGraphics, mouseX, mouseY, partialTick);
         background.renderTexture(guiGraphics);
         ItemStack itemStack = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND);
-        if(itemStack.getItem() instanceof IAccessControlToken controlTokenObj) this.controlToken = controlTokenObj;
-        if(controlToken != null) accessLevelLabel.text = Component.literal(String.valueOf(controlToken.getPermissionLevel(itemStack)));
+        IAccessControlToken capability = itemStack.getCapability(ModCapabilities.ACCESS_TOKEN_CAPABILITY);
+        if(capability != null) accessLevelLabel.text = Component.literal(String.valueOf(
+                capability.getPermissionLevel(itemStack)
+        ));
     }
 }

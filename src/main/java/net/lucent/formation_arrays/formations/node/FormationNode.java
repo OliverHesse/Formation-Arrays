@@ -17,7 +17,7 @@ public class FormationNode implements IFormationNode {
     private final HashMap<String, IFormationConnection<?>> formationConnection = new HashMap<>();
     private final HashMap<String, IFormationPort<?>> formationPorts = new HashMap<>();
 
-
+    private UUID formationUUID;
     @Override
     public IFormationConnection<?> getFormationConnection(String id) {
         return formationConnection.get(id);
@@ -70,7 +70,12 @@ public class FormationNode implements IFormationNode {
 
     @Override
     public UUID getFormationId() {
-        return null;
+        return formationUUID;
+    }
+
+    @Override
+    public void setFormationId(UUID id) {
+        this.formationUUID=id;
     }
 
     @Override

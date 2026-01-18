@@ -17,6 +17,7 @@ import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.connec
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.connection_elements.PortDataPanel;
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.connection_elements.buttons.ConnectionButton;
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.connection_elements.buttons.PortButton;
+import net.lucent.formation_arrays.gui.easy_gui_screens.ConnectionScreen;
 import net.lucent.formation_arrays.gui.easy_gui_screens.Tier1FormationCoreScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -82,10 +83,10 @@ public class FormationCoreConnectionPanel extends EmptyContainer {
 
     public void selectConnection(IFormationConnection<?> connection){
         this.formationConnection = connection;
-        List<AvailablePort> availablePorts =   FormationArrays.getClientCoreManager().getAvailablePorts(
-                ((Tier1FormationCoreScreen) getScreen()).getLevel(),
-                ((Tier1FormationCoreScreen) getScreen()).getCoreBlockEntity().getBlockPos(),
-                ((Tier1FormationCoreScreen) getScreen()).getCoreBlockEntity().getDetectionRadius(),
+        List<AvailablePort> availablePorts =   FormationArrays.getClientFormationHolder().getAvailablePorts(
+                ((ConnectionScreen) getScreen()).getCoreBlockEntity().getLevel(),
+                ((ConnectionScreen) getScreen()).getCoreBlockEntity().getBlockPos(),
+                ((ConnectionScreen) getScreen()).getCoreBlockEntity().getDetectionRadius(),
                 formationNode,
                 connection
                 );

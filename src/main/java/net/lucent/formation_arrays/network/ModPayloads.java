@@ -3,7 +3,9 @@ package net.lucent.formation_arrays.network;
 import net.lucent.formation_arrays.FormationArrays;
 import net.lucent.formation_arrays.network.client_bound.SyncAccessToken;
 import net.lucent.formation_arrays.network.client_bound.UpdateNearbyCores;
+import net.lucent.formation_arrays.network.client_bound.UpdateNearbyFormations;
 import net.lucent.formation_arrays.network.server_bound.RequestNearbyCoresPayload;
+import net.lucent.formation_arrays.network.server_bound.RequestNearbyFormationsPayload;
 import net.lucent.formation_arrays.network.server_bound.UpdateAccessLevel;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -23,6 +25,11 @@ public class ModPayloads {
                 UpdateAccessLevel.STREAM_CODEC,
                 UpdateAccessLevel::handlePayload
         );
+        registrar.playToServer(
+                RequestNearbyFormationsPayload.TYPE,
+                RequestNearbyFormationsPayload.STREAM_CODEC,
+                RequestNearbyFormationsPayload::handlePayload
+        );
     }
     public static void  registerClientPayloads(PayloadRegistrar registrar){
         registrar.playToClient(
@@ -34,6 +41,11 @@ public class ModPayloads {
                 SyncAccessToken.TYPE,
                 SyncAccessToken.STREAM_CODEC,
                 SyncAccessToken::handlePayload
+        );
+        registrar.playToClient(
+                UpdateNearbyFormations.TYPE,
+                UpdateNearbyFormations.STREAM_CODEC,
+                UpdateNearbyFormations::handlePayload
         );
     }
     @SubscribeEvent

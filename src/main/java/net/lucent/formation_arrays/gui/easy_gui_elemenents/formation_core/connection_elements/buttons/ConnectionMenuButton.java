@@ -32,13 +32,15 @@ public class ConnectionMenuButton extends AbstractButton {
         textLabel.useCustomScaling = true;
         textLabel.setCustomScale(0.5);
         addChild(textLabel);
+        PRESSED_TIME = 5;
     }
 
     @Override
     public void renderSelf(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        if(isHovered()) hoverTexture.renderTexture(guiGraphics);
-        else if(isPressed()) pressTexture.renderTexture(guiGraphics);
-        else defaultTexture.renderTexture(guiGraphics);
+
+           if(isPressed()) pressTexture.renderTexture(guiGraphics);
+           else   if(isHovered()) hoverTexture.renderTexture(guiGraphics);
+            else defaultTexture.renderTexture(guiGraphics);
 
 
     }

@@ -48,7 +48,7 @@ public class ChangeValueButton extends AbstractButton {
         };
         addChild(renderable);
         renderable.setRotation(0,0,rotation);
-
+        PRESSED_TIME = 5;
     }
 
     @Override

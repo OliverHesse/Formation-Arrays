@@ -9,6 +9,7 @@ import net.lucent.formation_arrays.blocks.block_entities.formation_cores.Abstrac
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.FormationCoreConnectionPanel;
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.Tier1FormationCoreInventoryPanel;
 import net.lucent.formation_arrays.gui.menus.Tier1FormationCoreMenu;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -41,7 +42,9 @@ public class Tier1FormationCoreScreen extends EasyGuiContainerScreen<Tier1Format
         view.getChildren().getFirst().setActive(false);
         view.getChildren().get(1).setActive(true);
         System.out.println("opening formation connection screen");
-        ((FormationCoreConnectionPanel)view.getChildren().get(1)).setFormationNode(getCoreBlockEntity().getFormationNode(slot));
+
+        Minecraft.getInstance().setScreen(new ConnectionScreen(Component.empty(),getCoreBlockEntity().getFormationNode(slot),getCoreBlockEntity()));
+
     }
 
 

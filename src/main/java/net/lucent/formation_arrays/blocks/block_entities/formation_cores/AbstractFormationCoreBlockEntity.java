@@ -6,25 +6,23 @@ import net.lucent.formation_arrays.api.cores.IFormationCore;
 
 import net.lucent.formation_arrays.api.formations.node.IFormationPort;
 import net.lucent.formation_arrays.api.formations.node.IFormationNode;
-import net.lucent.formation_arrays.api.items.IAccessControlToken;
+import net.lucent.formation_arrays.api.capability.IAccessControlToken;
+import net.lucent.formation_arrays.api.items.IFormationHolder;
+import net.lucent.formation_arrays.capabilities.ModCapabilities;
 import net.lucent.formation_arrays.data_components.ModDataComponents;
 import net.lucent.formation_arrays.formations.FormationCoreItemStackHandler;
 import net.lucent.formation_arrays.formations.node.CoreNodeSlot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +68,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
         formationNodeSlots = new CoreNodeSlot[itemStackHandler.MAX_FORMATIONS];
         for(int i = 0;i<formationNodeSlots.length;i++){
             formationNodeSlots[i] = new CoreNodeSlot(null,ItemStack.EMPTY,null);
+            updateFormationSlot(i);
         }
     }
 
@@ -86,6 +85,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
             clearFormationSlot(slot);
             return;
         }
+        if(formationNodeSlots[slot] == null) formationNodeSlots[slot] = new CoreNodeSlot(null,ItemStack.EMPTY,null);
         if(itemStack == formationNodeSlots[slot].itemStack()) return;
         clearFormationSlot(slot);
         formationNodeSlots[slot] = CoreNodeSlot.fromItemStack(UUID.randomUUID(),itemStack,getBlockPos());
@@ -139,6 +139,13 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
     }
 
     @Override
+    public ResourceLocation getFormationRegistryId(UUID formationId) {
+
+        return  ((IFormationHolder) getFormationItemStack(formationId).getItem()).getFormationResourceLocation(getFormationItemStack(formationId));
+
+    }
+
+    @Override
     public ItemStack getFormationItemStack(UUID formation){
         return formationItemStackHandler.getFormationItemStack(idSlotMap.get(formation));
     }
@@ -152,17 +159,19 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
     public String getOwnerId(){
         ItemStack itemStack = formationItemStackHandler.getControlToken();
         if(itemStack == ItemStack.EMPTY) return null;
-        if(!itemStack.has(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT)) return null;
-        return ((IAccessControlToken)itemStack.getItem()).getOwnerId(itemStack);
+        IAccessControlToken controlTokenCapability = itemStack.getCapability(ModCapabilities.ACCESS_TOKEN_CAPABILITY);
+        if(controlTokenCapability == null) return null;
+        return controlTokenCapability.getOwnerId(itemStack);
     }
 
     @Override
     public int getPermissionLevel(){
         ItemStack itemStack = formationItemStackHandler.getControlToken();
         if(itemStack == ItemStack.EMPTY) return 0;
-        if(!itemStack.has(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT)) return 0;
+        IAccessControlToken controlTokenCapability = itemStack.getCapability(ModCapabilities.ACCESS_TOKEN_CAPABILITY);
+        if(controlTokenCapability == null) return 0;
+        return controlTokenCapability.getPermissionLevel(itemStack);
 
-        return ((IAccessControlToken)itemStack.getItem()).getPermissionLevel(itemStack);
     }
 
     //TODO
@@ -170,7 +179,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
     public List<IFormationNode> getFormationNodes() {
         List<IFormationNode> formationNodes = new ArrayList<>();
         for(CoreNodeSlot slot: formationNodeSlots){
-            formationNodes.add(slot.node());
+            if(slot.node() != null) formationNodes.add(slot.node());
         }
         return formationNodes;
     }
@@ -179,7 +188,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
     public List<UUID> getFormationNodeIDs() {
         List<UUID> uuidList = new ArrayList<>();
         for(CoreNodeSlot slot: formationNodeSlots){
-            uuidList.add(slot.uuid());
+            if(slot.uuid() != null)uuidList.add(slot.uuid());
         }
         return uuidList;
     }
@@ -206,6 +215,10 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         formationItemStackHandler.deserializeNBT(registries,tag.getCompound("inventory"));
+        for(int i = 0;i<formationNodeSlots.length;i++){
+            formationNodeSlots[i] = new CoreNodeSlot(null,ItemStack.EMPTY,null);
+            updateFormationSlot(i);
+        }
         //TODO add qi
     }
 }

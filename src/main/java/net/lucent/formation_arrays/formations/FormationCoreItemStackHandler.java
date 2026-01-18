@@ -1,17 +1,14 @@
 package net.lucent.formation_arrays.formations;
 
 import net.lucent.formation_arrays.api.formations.IFormation;
-import net.lucent.formation_arrays.api.items.IAccessControlToken;
+import net.lucent.formation_arrays.api.capability.IAccessControlToken;
 import net.lucent.formation_arrays.api.items.IFormationHolder;
-import net.lucent.formation_arrays.api.registries.FormationRegistry;
+import net.lucent.formation_arrays.blocks.block_entities.formation_cores.AbstractFormationCoreBlockEntity;
+import net.lucent.formation_arrays.capabilities.ModCapabilities;
 import net.lucent.formation_arrays.util.ModTags;
-import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,7 +23,7 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
     public final int JADE_SLIP_SLOTS_PER_FORMATION;
     public List<Integer> FORMATION_SLOTS = new ArrayList<>();
     public Set<Integer> JADE_SLIP_SLOTS = new HashSet<>();
-    public BlockEntity entity;
+    public AbstractFormationCoreBlockEntity entity;
 
     public FormationCoreItemStackHandler(int fuelSlots, int maxFormations, int jadeSlipSlotsPerFormation){
         super(1+fuelSlots+maxFormations+maxFormations*jadeSlipSlotsPerFormation);
@@ -58,7 +55,7 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
         //WHERE TAGS AND instance of comes in
-        if(slot == ACCESS_CONTROL_TOKEN_SLOT) return stack.getItem() instanceof IAccessControlToken;
+        if(slot == ACCESS_CONTROL_TOKEN_SLOT) return stack.getCapability(ModCapabilities.ACCESS_TOKEN_CAPABILITY) != null;
         if(JADE_SLIP_SLOTS.contains(slot)) return stack.is(ModTags.Items.JADE_SLIP);
         if(slot >= 1 && slot <= FUEL_SLOTS) return stack.is(ModTags.Items.FORMATION_CORE_FUEL);
         if(FORMATION_SLOTS.contains(slot)) return stack.getItem() instanceof IFormationHolder;
@@ -102,9 +99,13 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
         @Override
         protected void onContentsChanged(int slot) {
             entity.setChanged();
+            if(FORMATION_SLOTS.contains(slot)){
+                entity.updateFormationSlot(FORMATION_SLOTS.indexOf(slot));
 
+            }
             if (!entity.getLevel().isClientSide()) {
                 entity.getLevel().sendBlockUpdated(entity.getBlockPos(),entity.getBlockState(),entity.getBlockState(),3);
+
             }
         }
 

@@ -10,6 +10,7 @@ import net.lucent.formation_arrays.blocks.block_entities.formation_cores.Abstrac
 import net.lucent.formation_arrays.formations.FormationCoreItemStackHandler;
 import net.lucent.formation_arrays.gui.ModMenuTypes;
 import net.lucent.formation_arrays.network.server_bound.RequestNearbyCoresPayload;
+import net.lucent.formation_arrays.network.server_bound.RequestNearbyFormationsPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -32,7 +33,7 @@ public class Tier1FormationCoreMenu extends AbstractFormationCoreMenu{
     public final AbstractFormationCoreBlockEntity coreBlockEntity;
     public final ContainerData data;
     public final Inventory inventory;
-
+    public boolean canModify = true;
 
     public Tier1FormationCoreMenu(int containerId, Inventory inventory, FriendlyByteBuf extraData) {
         this(containerId,inventory, (AbstractFormationCoreBlockEntity) inventory.player.level().getBlockEntity(extraData.readBlockPos()),new SimpleContainerData(1));
@@ -50,7 +51,7 @@ public class Tier1FormationCoreMenu extends AbstractFormationCoreMenu{
         System.out.println("menu created");
         addPlayerInventory(inventory);
         addCoreInventory();
-        if(blockEntity.getLevel().isClientSide()) PacketDistributor.sendToServer(new RequestNearbyCoresPayload(blockEntity.getBlockPos()));
+        if(blockEntity.getLevel().isClientSide()) PacketDistributor.sendToServer(new RequestNearbyFormationsPayload(blockEntity.getBlockPos()));
     }
 
 
@@ -100,6 +101,11 @@ public class Tier1FormationCoreMenu extends AbstractFormationCoreMenu{
         this.addSlot(new SlotItemHandler(handler,5,80,76));
 
          */
+    }
+
+    @Override
+    public void setCarried(ItemStack stack) {
+        if(canModify) super.setCarried(stack);
     }
 
     @Override

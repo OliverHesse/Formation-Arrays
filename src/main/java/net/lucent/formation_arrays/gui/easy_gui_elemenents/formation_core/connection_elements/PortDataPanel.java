@@ -6,6 +6,7 @@ import net.lucent.easygui.interfaces.ContainerRenderable;
 import net.lucent.easygui.interfaces.IEasyGuiScreen;
 import net.lucent.easygui.properties.Positioning;
 import net.lucent.formation_arrays.api.formations.node.AvailablePort;
+import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.connection_elements.buttons.TryConnectButton;
 import net.minecraft.network.chat.Component;
 
 public class PortDataPanel extends DynamicScrollBox {
@@ -13,6 +14,7 @@ public class PortDataPanel extends DynamicScrollBox {
     private AvailablePort port;
     public Label titleLabel;
     public Label descriptionLabel;
+    public TryConnectButton button;
     public PortDataPanel(IEasyGuiScreen screen, int x, int y, int width, int height){
         super(screen,x,y,width,height);
         useBackgroundColor = false;
@@ -32,10 +34,17 @@ public class PortDataPanel extends DynamicScrollBox {
         descriptionLabel.setWidth(getWidth()*2);
         descriptionLabel.setWrap(true);
         addChild(descriptionLabel);
+        TryConnectButton btn = new TryConnectButton(screen,0,0);
+        btn.setActive(false);
+        btn.setXPositioning(Positioning.CENTER);
+        btn.setX(-btn.getWidth()/2);
+        button = btn;
+        addChild(btn);
     }
     public void clear(){
         titleLabel.text = Component.empty();
         descriptionLabel.text = Component.empty();
+        button.setActive(false);
     }//TODO
     public void setPort(AvailablePort port){
         this.port = port;
@@ -43,6 +52,8 @@ public class PortDataPanel extends DynamicScrollBox {
         descriptionLabel.text =  Component.empty()
                 .append(port.description())
                 .append("\n Type: "+port.type());
+        button.setActive(true);
+        button.setY(titleLabel.getHeight()+descriptionLabel.getHeight()+20);
     }
     public AvailablePort getPort(){return this.port;}
 

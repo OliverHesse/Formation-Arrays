@@ -30,6 +30,7 @@ public class FormationArrayClient {
         @SubscribeEvent
         public static void onClientLogin(ClientPlayerNetworkEvent.LoggingIn event) {
             FormationArrays.createClientCoreManager();
+            FormationArrays.createClientFormationHolder();
         }
 
     }

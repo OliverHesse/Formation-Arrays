@@ -2,6 +2,8 @@ package net.lucent.formation_arrays.network.client_bound;
 
 import io.netty.buffer.ByteBuf;
 import net.lucent.formation_arrays.FormationArrays;
+import net.lucent.formation_arrays.api.capability.IAccessControlToken;
+import net.lucent.formation_arrays.capabilities.ModCapabilities;
 import net.lucent.formation_arrays.data_components.ModDataComponents;
 import net.lucent.formation_arrays.data_components.components.AccessTokenComponent;
 import net.minecraft.client.Minecraft;

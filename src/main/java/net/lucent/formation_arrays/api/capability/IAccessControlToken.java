@@ -1,4 +1,4 @@
-package net.lucent.formation_arrays.api.items;
+package net.lucent.formation_arrays.api.capability;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -13,4 +13,5 @@ public interface IAccessControlToken {
     boolean hasPermission(Player player,ItemStack itemStack); //checks if the given player has permission
     List<Player> filterPlayerList(ItemStack controlToken,List<Player> playerList);
     void tryUpdateAccessLevel(Player player,ItemStack controlToken,int value);
+
 }
