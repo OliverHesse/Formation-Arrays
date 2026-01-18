@@ -14,15 +14,21 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class Tier1FormationCoreBlockEntity extends AbstractFormationCoreBlockEntity implements MenuProvider {
+public class Tier1FormationCoreBlockEntity extends AbstractFormationCoreBlockEntity  {
     public Tier1FormationCoreBlockEntity(BlockPos pos, BlockState blockState, ICoreEnergyContainer energyContainer, FormationCoreItemStackHandler itemStackHandler) {
         super(ModBlockEntities.TIER_1_FORMATION_CORE_BE.get(), pos, blockState, energyContainer, itemStackHandler);
+        System.out.println("created formation core be");
     }
-    @Nullable
+
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
 
         return new Tier1FormationCoreMenu(containerId,playerInventory,this,dataSlot);
+    }
+
+    @Override
+    public int getDetectionRadius() {
+        return 32;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.lucent.formation_arrays.util;
 
 import net.lucent.formation_arrays.FormationArrays;
+import net.lucent.formation_arrays.blocks.ModBlocks;
 import net.lucent.formation_arrays.items.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -17,9 +18,10 @@ public class ModCreativeModeTabs {
 
     public static final Supplier<CreativeModeTab> FORMATION_CORE_TAB = CREATIVE_MODE_TAB.register("formation_core_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PLAYER_ACCESS_CONTROL_TOKEN.get()))
-                    .title(Component.translatable("creativetab.formation_arrays.formation_cores"))
+                    .title(Component.literal("formation array items"))
                     .displayItems((itemDisplayParameters, output) -> {
                         ModItems.PLAYER_ACCESS_CONTROL_TOKEN.get();
+                        ModBlocks.TIER_1_FORMATION_CORE.get();
                     }).build());
 
     public static void register(IEventBus eventBus) {

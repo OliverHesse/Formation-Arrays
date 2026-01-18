@@ -3,8 +3,10 @@ package net.lucent.formation_arrays.items;
 import net.lucent.formation_arrays.api.items.IAccessControlToken;
 import net.lucent.formation_arrays.data_components.ModDataComponents;
 import net.lucent.formation_arrays.data_components.components.AccessTokenComponent;
+import net.lucent.formation_arrays.gui.easy_gui_screens.AccessControlTokenScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -34,12 +36,22 @@ public class PlayerAccessControlToken extends Item implements IAccessControlToke
         ItemStack item = player.getItemInHand(usedHand);
 
         if(level.isClientSide() && !player.isShiftKeyDown()) return InteractionResultHolder.fail(item);
-        if(isLinked(item)) {
+        if(isLinked(item) && level.isClientSide()) {
+            System.out.println("is linked try to open screen");
+            System.out.println(player.getUUID());
+            System.out.println(getOwnerId(item));
+            if(player.getUUID().toString().equals(getOwnerId(item))) {
+                System.out.println("CREATE");
+                Minecraft.getInstance().setScreen(new AccessControlTokenScreen(Component.empty()));
+
+            };
             //TODO check if player is allowed to modify it. if so send packet to open menu and set access level
             return InteractionResultHolder.success(item);
         }
+        else if(!isLinked(item)){
+            item.set(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT, AccessTokenComponent.fromPlayer(player));
+        }
 
-        item.set(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT, AccessTokenComponent.fromPlayer(player));
         return InteractionResultHolder.success(item);
 
 
@@ -47,7 +59,7 @@ public class PlayerAccessControlToken extends Item implements IAccessControlToke
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        if(!context.level().isClientSide()) return;
+
         if(isLinked(stack)){
             //item is linked display player name
             UUID playerId = UUID.fromString(getOwnerId(stack));
@@ -73,7 +85,7 @@ public class PlayerAccessControlToken extends Item implements IAccessControlToke
 
         Player player = level.getPlayerByUUID(UUID.fromString(getOwnerId(controlToken)));
         if(player == null) return;
-        controlToken.set(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT,AccessTokenComponent.fromPlayer(player));
+        controlToken.set(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT,new AccessTokenComponent(getOwnerId(controlToken),player.getDisplayName().getString(),getPermissionLevel(controlToken)));
     }
 
     public boolean isPlayerOnline(UUID id,Level level){
@@ -100,11 +112,26 @@ public class PlayerAccessControlToken extends Item implements IAccessControlToke
     }
 
     @Override
+    public boolean hasPermission(Player player,ItemStack itemStack) {
+        return player.getUUID().equals(getOwnerId(itemStack));
+    }
+
+    @Override
     public List<Player> filterPlayerList(ItemStack controlToken, List<Player> playerList) {
         if(controlToken.has(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT)) return List.of();
         for (Player player : playerList){
             if(player.getUUID().toString().equals(controlToken.get(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT).owner())) return List.of(player);
         }
         return List.of();
+    }
+
+    @Override
+    public void tryUpdateAccessLevel(Player player, ItemStack controlToken,int value) {
+        if(!isLinked(controlToken)) return;
+
+        if(!player.getUUID().toString().equals(getOwnerId(controlToken)) || getPermissionLevel(controlToken)+value <0) return;
+        System.out.println("control Token value updated");
+        controlToken.set(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT,new AccessTokenComponent(getOwnerId(controlToken),getDisplayName(controlToken),getPermissionLevel(controlToken)+value));
+
     }
 }

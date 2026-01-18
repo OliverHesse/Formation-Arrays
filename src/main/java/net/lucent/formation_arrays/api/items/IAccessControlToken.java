@@ -10,6 +10,7 @@ public interface IAccessControlToken {
     String getOwnerId(ItemStack controlToken);
     int getPermissionLevel(ItemStack controlToken);
     boolean isLinked(ItemStack controlToken);
-
+    boolean hasPermission(Player player,ItemStack itemStack); //checks if the given player has permission
     List<Player> filterPlayerList(ItemStack controlToken,List<Player> playerList);
+    void tryUpdateAccessLevel(Player player,ItemStack controlToken,int value);
 }

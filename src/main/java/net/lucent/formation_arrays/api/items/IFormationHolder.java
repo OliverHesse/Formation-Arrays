@@ -3,10 +3,11 @@ package net.lucent.formation_arrays.api.items;
 import net.lucent.formation_arrays.api.formations.IFormation;
 import net.lucent.formation_arrays.api.registries.FormationRegistry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 public interface IFormationHolder {
-    ResourceLocation getFormationResourceLocation();
-    default IFormation getFormation(){
-        return FormationRegistry.FORMATION_REGISTRY.get(getFormationResourceLocation());
+    ResourceLocation getFormationResourceLocation(ItemStack stack);
+    default IFormation getFormation(ItemStack itemStack){
+        return FormationRegistry.FORMATION_REGISTRY.get(getFormationResourceLocation(itemStack));
     }
 }

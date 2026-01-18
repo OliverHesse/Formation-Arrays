@@ -1,5 +1,7 @@
 package net.lucent.formation_arrays.api.formations.node;
 
+import net.minecraft.world.level.Level;
+
 public interface IFormationPortFunction<T>{
-    T run();
+    T run(Level level);
 }

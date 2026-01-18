@@ -1,4 +1,4 @@
-package net.lucent.formation_arrays.api.formations.node;
+package net.lucent.formation_arrays.api.formations.node.connections;
 
 //there is probably a better way to do this... but i really need to have a way to compare the 2 assigned "types"
 //but because of how compilers work i cannot access T at runtime

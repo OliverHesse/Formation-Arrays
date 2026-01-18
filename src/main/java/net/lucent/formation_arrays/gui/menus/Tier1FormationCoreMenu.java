@@ -1,38 +1,111 @@
 package net.lucent.formation_arrays.gui.menus;
 
+import net.lucent.easygui.elements.inventory.DisplaySlot;
+import net.lucent.easygui.interfaces.IEasyGuiScreen;
+import net.lucent.easygui.interfaces.events.Hoverable;
+import net.lucent.easygui.util.inventory.EasyItemHandlerSlot;
+import net.lucent.easygui.util.inventory.EasySlot;
 import net.lucent.formation_arrays.blocks.ModBlocks;
+import net.lucent.formation_arrays.blocks.block_entities.formation_cores.AbstractFormationCoreBlockEntity;
+import net.lucent.formation_arrays.formations.FormationCoreItemStackHandler;
 import net.lucent.formation_arrays.gui.ModMenuTypes;
+import net.lucent.formation_arrays.network.server_bound.RequestNearbyCoresPayload;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 public class Tier1FormationCoreMenu extends AbstractFormationCoreMenu{
-    private final Level level;
-    private final BlockEntity blockEntity;
-    private final ContainerData data;
+
+    public final AbstractFormationCoreBlockEntity coreBlockEntity;
+    public final ContainerData data;
+    public final Inventory inventory;
 
 
     public Tier1FormationCoreMenu(int containerId, Inventory inventory, FriendlyByteBuf extraData) {
-        this(containerId,inventory,inventory.player.level().getBlockEntity(extraData.readBlockPos()),new SimpleContainerData(1));
+        this(containerId,inventory, (AbstractFormationCoreBlockEntity) inventory.player.level().getBlockEntity(extraData.readBlockPos()),new SimpleContainerData(1));
     }
-    public Tier1FormationCoreMenu(int containerId, Inventory inventory, BlockEntity blockEntity, ContainerData dataSlot) {
+    public Tier1FormationCoreMenu(int containerId, Inventory inventory, AbstractFormationCoreBlockEntity blockEntity, ContainerData dataSlot) {
         super(ModMenuTypes.TIER_1_FORMATION_CORE_MENU.get(),containerId);
+        System.out.println("trying to create menu");
 
-        this.level = blockEntity.getLevel();
-        this.blockEntity = blockEntity;
+
+        this.inventory = inventory;
+
+        this.coreBlockEntity = blockEntity;
+        createSlots();
         this.data = dataSlot;
+        System.out.println("menu created");
+        addPlayerInventory(inventory);
+        addCoreInventory();
+        if(blockEntity.getLevel().isClientSide()) PacketDistributor.sendToServer(new RequestNearbyCoresPayload(blockEntity.getBlockPos()));
+    }
+
+
+    public void createSlots(){
+        addPlayerInventory(inventory);
+        addPlayerHotbar(inventory);
+        ItemStackHandler handler = coreBlockEntity.formationItemStackHandler;
+        this.addSlot(new EasyItemHandlerSlot(handler,0,0,0,"c"+0));
+
+        this.addSlot(new EasyItemHandlerSlot(handler,1,0,0,"c"+1));
+
+        this.addSlot(new EasyItemHandlerSlot(handler,2,0,0,"c"+2));
+
+        this.addSlot(new EasyItemHandlerSlot(handler,3,0,0,"c"+3));
+        this.addSlot(new EasyItemHandlerSlot(handler,4,0,0,"c"+4));
+        this.addSlot(new EasyItemHandlerSlot(handler,5,0,0,"c"+5));
+    }
+
+    private void addPlayerInventory(Inventory playerInventory) {
+        for (int i = 0; i < 3; ++i) {
+            for (int l = 0; l < 9; ++l) {
+                this.addSlot(new EasySlot(playerInventory, l + i * 9 + 9, 0, 0,"p"+(l + i * 9 + 9)));
+            }
+        }
+    }
+
+    private void addPlayerHotbar(Inventory playerInventory) {
+        for (int i = 0; i < 9; ++i) {
+            this.addSlot(new EasySlot(playerInventory, i,0, 0,"p"+i));
+        }
+    }
+    public Level getLevel(){return this.coreBlockEntity.getLevel();}
+    public AbstractFormationCoreBlockEntity getCoreBlockEntity(){return this.coreBlockEntity;}
+    public Inventory getInventory(){return this.inventory;}
+    public FormationCoreItemStackHandler getItemStackHandler(){return coreBlockEntity.formationItemStackHandler;}
+    public void addCoreInventory(){
+        /*
+        ItemStackHandler handler = coreBlockEntity.formationItemStackHandler;
+        this.addSlot(new SlotItemHandler(handler,0,155,5));
+
+        this.addSlot(new SlotItemHandler(handler,1,8,76));
+
+        this.addSlot(new SlotItemHandler(handler,2,80,18));
+
+        this.addSlot(new SlotItemHandler(handler,3,80,40));
+        this.addSlot(new SlotItemHandler(handler,4,80,58));
+        this.addSlot(new SlotItemHandler(handler,5,80,76));
+
+         */
     }
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
+        return stillValid(ContainerLevelAccess.create(coreBlockEntity.getLevel(), coreBlockEntity.getBlockPos()),
                 player, ModBlocks.TIER_1_FORMATION_CORE.get());
     }
+
 }

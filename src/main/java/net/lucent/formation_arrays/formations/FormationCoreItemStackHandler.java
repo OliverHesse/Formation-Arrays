@@ -5,24 +5,31 @@ import net.lucent.formation_arrays.api.items.IAccessControlToken;
 import net.lucent.formation_arrays.api.items.IFormationHolder;
 import net.lucent.formation_arrays.api.registries.FormationRegistry;
 import net.lucent.formation_arrays.util.ModTags;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class FormationCoreItemStackHandler extends ItemStackHandler {
 
-    public final int ACCESS_CONTROL_TOKEN_SLOT = 1;
+    public final int ACCESS_CONTROL_TOKEN_SLOT = 0;
     public final int FUEL_SLOTS;
     public final int MAX_FORMATIONS;
     public final int JADE_SLIP_SLOTS_PER_FORMATION;
-    public List<Integer> FORMATION_SLOTS;
-    public Set<Integer> JADE_SLIP_SLOTS;
-    public FormationCoreItemStackHandler(int fuelSlots, int maxFormations, int jadeSlipSlotsPerFormation){
+    public List<Integer> FORMATION_SLOTS = new ArrayList<>();
+    public Set<Integer> JADE_SLIP_SLOTS = new HashSet<>();
+    public BlockEntity entity;
 
+    public FormationCoreItemStackHandler(int fuelSlots, int maxFormations, int jadeSlipSlotsPerFormation){
+        super(1+fuelSlots+maxFormations+maxFormations*jadeSlipSlotsPerFormation);
         FUEL_SLOTS = fuelSlots;
         MAX_FORMATIONS = maxFormations;
         JADE_SLIP_SLOTS_PER_FORMATION = jadeSlipSlotsPerFormation;
@@ -63,6 +70,14 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
         }
         return ItemStack.EMPTY;
     }
+    public void printSlots(){
+        System.out.println("printing slots");
+        System.out.println("client?: "+entity.getLevel().isClientSide());
+        for(int i=0;i<getSlots();i++){
+            System.out.println(getStackInSlot(i).toString());
+        }
+        System.out.println("finished printing slots");
+    }
     public ItemStack getControlToken(){
         return getStackInSlot(ACCESS_CONTROL_TOKEN_SLOT);
     }
@@ -82,6 +97,18 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
     public IFormation getFormation(int slot){
         ItemStack item = getFormationItemStack(slot);
         if(item.equals(ItemStack.EMPTY)) return null;
-        return ((IFormationHolder) item.getItem()).getFormation();
+        return ((IFormationHolder) item.getItem()).getFormation(item);
     }
+        @Override
+        protected void onContentsChanged(int slot) {
+            entity.setChanged();
+
+            if (!entity.getLevel().isClientSide()) {
+                entity.getLevel().sendBlockUpdated(entity.getBlockPos(),entity.getBlockState(),entity.getBlockState(),3);
+            }
+        }
+
+
+
+
 }

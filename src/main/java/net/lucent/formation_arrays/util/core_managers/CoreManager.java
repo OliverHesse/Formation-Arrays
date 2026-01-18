@@ -1,15 +1,20 @@
-package net.lucent.formation_arrays.util;
+package net.lucent.formation_arrays.util.core_managers;
 
 import net.lucent.formation_arrays.api.cores.ICoreManager;
+import net.lucent.formation_arrays.api.cores.IFormationCore;
+import net.lucent.formation_arrays.api.formations.node.IFormationNode;
+import net.lucent.formation_arrays.api.formations.node.AvailablePort;
+import net.lucent.formation_arrays.api.formations.node.IFormationPort;
+import net.lucent.formation_arrays.api.formations.node.connections.IFormationConnection;
+import net.lucent.formation_arrays.util.NBTUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.*;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
-import org.checkerframework.checker.units.qual.C;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class CoreManager extends SavedData implements ICoreManager {
 
@@ -17,6 +22,28 @@ public class CoreManager extends SavedData implements ICoreManager {
 
     private final HashSet<BlockPos> cores = new HashSet<>();
 
+
+    @Override
+    public List<AvailablePort> getAvailablePorts(Level level, BlockPos origin, int radius, IFormationNode formation, IFormationConnection<?> connection) {
+        Set<BlockPos> cores = getNearbyCores(level,origin,radius);
+        List<AvailablePort> ports = new ArrayList<>();
+        for(BlockPos pos : cores){
+            if(level.getBlockEntity(pos) instanceof IFormationCore formationCore){
+                for(UUID formationId : formationCore.getFormationNodeIDs()){
+                    for(IFormationPort<?> port : formationCore.getFormationNode(formationId).getFormationPorts()){
+                        if(port.getPortType().equals(connection.getConnectionType())) ports.add(AvailablePort.fromIFormationPort(
+                                port,
+                                pos,
+                                formationId,
+                                formationCore.getFormationNode(formationId).getPortId(port)
+                        ));
+
+                    }
+                }
+            }
+        }
+        return ports;
+    }
 
     @Override
     public Set<BlockPos> getCores() {

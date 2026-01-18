@@ -16,7 +16,7 @@ public class ModMenuTypes {
             DeferredRegister.create(Registries.MENU, FormationArrays.MOD_ID);
 
     public static final DeferredHolder<MenuType<?>, MenuType<Tier1FormationCoreMenu>> TIER_1_FORMATION_CORE_MENU =
-            registerMenuType("pedestal_menu", Tier1FormationCoreMenu::new);
+            registerMenuType("tier_1_formation_core_menu", Tier1FormationCoreMenu::new);
 
 
 

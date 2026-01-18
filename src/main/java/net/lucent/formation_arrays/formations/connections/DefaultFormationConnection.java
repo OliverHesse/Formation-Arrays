@@ -1,9 +1,8 @@
 package net.lucent.formation_arrays.formations.connections;
 
-import net.lucent.formation_arrays.FormationArrays;
 import net.lucent.formation_arrays.api.cores.IFormationCore;
-import net.lucent.formation_arrays.api.formations.node.FormationPort;
-import net.lucent.formation_arrays.api.formations.node.IFormationConnection;
+import net.lucent.formation_arrays.api.formations.node.IFormationPort;
+import net.lucent.formation_arrays.api.formations.node.connections.IFormationConnection;
 import net.lucent.formation_arrays.util.LoggerUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -22,10 +21,9 @@ public class DefaultFormationConnection<T> implements IFormationConnection<T> {
     private final Component name;
     private final Component description;
     public final T defaultValue;
-    public DefaultFormationConnection(BlockPos coreLocation, UUID formationId, String port, String type, Component name, Component description, T defaultValue) {
+    public DefaultFormationConnection(BlockPos coreLocation, UUID formationId, String type, Component name, Component description, T defaultValue) {
         this.coreLocation = coreLocation;
         this.formationId = formationId;
-        this.port = port;
         this.type = type;
         this.name = name;
         this.description = description;
@@ -78,19 +76,21 @@ public class DefaultFormationConnection<T> implements IFormationConnection<T> {
     public Component getName() {
         return name;
     }
+
+
+
+
     @Override
-    public T getConnectionData() {
-        return null;
-    }
     public T getConnectionData(Level level) {
         if(level.isClientSide()) return null;
+        if(port == null) return defaultValue;
         BlockEntity potentialCore = level.getBlockEntity(coreLocation);
         if(!(potentialCore instanceof IFormationCore formationCore)) return null;
 
-        FormationPort<?> formationPort = formationCore.getFormationPort(formationId,port,type);
-        if(!formationPort.portType().equals(type)) LoggerUtils.portTypeMismatch(port,name.getString(),coreLocation);
+        IFormationPort<?> formationPort = formationCore.getFormationPort(formationId,port,type);
+        if(!formationPort.getPortType().equals(type)) LoggerUtils.portTypeMismatch(port,name.getString(),coreLocation);
 
-        T data = (T) formationPort.run(); // i want this to crash if something goes wrong, although potentially add logging
+        T data = (T) formationPort.run(level); // i want this to crash if something goes wrong, although potentially add logging
         if(data == null) return defaultValue;
         return data;
     }

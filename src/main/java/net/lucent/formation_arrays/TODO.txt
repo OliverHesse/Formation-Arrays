@@ -1,2 +1,7 @@
 get formation core inventory ui set up
 get formation node port linking ui set up
+get connection to return null if formation it is trying to access is in unloaded chunk
+
+
+
+create a custom type object? and they have to register it and pass the registry key?

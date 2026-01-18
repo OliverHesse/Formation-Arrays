@@ -1,9 +1,12 @@
 package net.lucent.formation_arrays.data_components;
 
+import com.mojang.serialization.Codec;
 import net.lucent.formation_arrays.FormationArrays;
 import net.lucent.formation_arrays.data_components.components.AccessTokenComponent;
+import net.lucent.formation_arrays.data_components.components.FormationPlateComponent;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -22,6 +25,14 @@ public class ModDataComponents {
                     .persistent(AccessTokenComponent.CODEC)
                     // The codec to read/write the data across the network
                     .networkSynchronized(AccessTokenComponent.STREAM_CODEC)
+    );
+
+    public static final Supplier<DataComponentType<String>> FORMATION_PLATE_COMPONENT = REGISTRAR.register(
+            "formation_id",
+            () -> DataComponentType.<String>builder()
+                    .persistent(Codec.STRING)
+                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
+                    .build()
     );
 
     private static <T> DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name,

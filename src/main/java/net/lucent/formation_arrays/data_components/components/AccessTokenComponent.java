@@ -12,7 +12,7 @@ public record AccessTokenComponent(String owner, String  ownerName, int accessLe
     public static final Codec<AccessTokenComponent> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.STRING.fieldOf("owner").forGetter(AccessTokenComponent::owner),
-                    Codec.STRING.fieldOf("ownerName").forGetter(AccessTokenComponent::ownerName),
+                    Codec.STRING.fieldOf("owner_name").forGetter(AccessTokenComponent::ownerName),
                     Codec.INT.fieldOf("access_level").forGetter(AccessTokenComponent::accessLevel)
             ).apply(instance, AccessTokenComponent::new)
     );
@@ -26,6 +26,4 @@ public record AccessTokenComponent(String owner, String  ownerName, int accessLe
     public static AccessTokenComponent fromPlayer(Player player){
         return new AccessTokenComponent(player.getStringUUID(),player.getDisplayName().getString(),0);
     }
-    public static final StreamCodec<ByteBuf, AccessTokenComponent> UNIT_STREAM_CODEC = StreamCodec.unit(new AccessTokenComponent("", "",0));
-
 }
