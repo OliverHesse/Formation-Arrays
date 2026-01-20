@@ -12,8 +12,10 @@ import net.lucent.formation_arrays.FormationArrays;
 import net.lucent.formation_arrays.network.server_bound.UpdateAccessLevel;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
-
+@OnlyIn(Dist.CLIENT)
 public class ChangeValueButton extends AbstractButton {
 
     public int valueChange;

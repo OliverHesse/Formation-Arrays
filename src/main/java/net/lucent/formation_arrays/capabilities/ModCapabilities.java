@@ -10,17 +10,18 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
 @EventBusSubscriber(modid = FormationArrays.MOD_ID,bus = EventBusSubscriber.Bus.MOD)
 public class ModCapabilities {
+
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event){
-        event.registerItem(
+
+     event.registerItem(
                 Capabilities.ACCESS_TOKEN_CAPABILITY,
                 (itemStack, context)->new PlayerAccessToken(),
                 ModItems.PLAYER_ACCESS_CONTROL_TOKEN
+
         );
-        event.registerItem(
-                Capabilities.FORMATION_FUEL_CAPABILITY,
-                (itemStack, context)->new ConsumeItemFormationFuel(),
-                ModItems.ENERGY_CRYSTAL
-        );
+
+
+
     }
 }

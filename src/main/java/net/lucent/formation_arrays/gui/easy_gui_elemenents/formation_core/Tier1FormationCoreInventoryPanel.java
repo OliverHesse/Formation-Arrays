@@ -4,7 +4,10 @@ import net.lucent.easygui.elements.inventory.DisplayItemHandlerSlot;
 import net.lucent.easygui.interfaces.IEasyGuiScreen;
 import net.lucent.easygui.interfaces.ITextureData;
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.inventory_menu.OpenConnectionButton;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class Tier1FormationCoreInventoryPanel extends FormationCoreInventoryPanel{
     public Tier1FormationCoreInventoryPanel(IEasyGuiScreen easyGuiScreen, ITextureData inventoryTexture) {
         super(easyGuiScreen, inventoryTexture);

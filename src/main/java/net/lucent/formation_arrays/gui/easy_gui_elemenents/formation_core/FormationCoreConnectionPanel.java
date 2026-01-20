@@ -23,10 +23,12 @@ import net.lucent.formation_arrays.network.server_bound.UpdateFormationConnectio
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
-
+@OnlyIn(Dist.CLIENT)
 public class FormationCoreConnectionPanel extends EmptyContainer {
     public final ITextureData background = new TextureDataSubSection(
             ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/connection_screen.png"),

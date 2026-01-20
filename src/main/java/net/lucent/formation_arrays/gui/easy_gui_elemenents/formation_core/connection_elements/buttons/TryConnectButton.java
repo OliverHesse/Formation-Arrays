@@ -5,7 +5,10 @@ import net.lucent.easygui.interfaces.IEasyGuiScreen;
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.FormationCoreConnectionPanel;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class TryConnectButton extends ConnectionMenuButton{
     public TryConnectButton(IEasyGuiScreen screen, int x, int y) {
         super(screen, x, y);

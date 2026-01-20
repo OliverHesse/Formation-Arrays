@@ -1,9 +1,7 @@
-get formation core inventory ui set up
-get formation node port linking ui set up
-get connection to return null if formation it is trying to access is in unloaded chunk
+go through most of the UI stuff and make it reference an Interface screen. this way i can
+reuse most of the elements
 
-
+add a basic core texture
 
 create a custom type object? and they have to register it and pass the registry key?
 
-SEND CORE SLOT CHANGES TO EVERY BLOCK ENTITY SO THEY HAVE ACCESS TO THE FORMATION NODE FOR THE TICKER

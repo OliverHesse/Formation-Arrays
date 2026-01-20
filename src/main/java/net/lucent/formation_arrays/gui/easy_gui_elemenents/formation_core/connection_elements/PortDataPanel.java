@@ -10,7 +10,10 @@ import net.lucent.formation_arrays.api.formations.node.connections.IFormationCon
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.FormationCoreConnectionPanel;
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.connection_elements.buttons.TryConnectButton;
 import net.minecraft.network.chat.Component;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class PortDataPanel extends DynamicScrollBox {
 
     private AvailablePort port;

@@ -42,6 +42,11 @@ public class ModPayloads {
                 UpdateNearbyCores::handlePayload
         );
         registrar.playToClient(
+                OpenAccessControlScreen.TYPE,
+                OpenAccessControlScreen.STREAM_CODEC,
+                OpenAccessControlScreen::handlePayload
+        );
+        registrar.playToClient(
                 SyncAccessToken.TYPE,
                 SyncAccessToken.STREAM_CODEC,
                 SyncAccessToken::handlePayload

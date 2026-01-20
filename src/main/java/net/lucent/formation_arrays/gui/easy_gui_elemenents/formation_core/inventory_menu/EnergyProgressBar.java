@@ -6,9 +6,11 @@ import net.lucent.easygui.interfaces.IEasyGuiScreen;
 import net.lucent.formation_arrays.gui.easy_gui_screens.Tier1FormationCoreScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.List;
-
+@OnlyIn(Dist.CLIENT)
 public class EnergyProgressBar extends EmptyContainer {
     boolean hovered;
     int MAX_QI;

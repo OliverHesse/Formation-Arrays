@@ -7,7 +7,10 @@ import net.lucent.formation_arrays.api.formations.node.IFormationNode;
 import net.lucent.formation_arrays.blocks.block_entities.formation_cores.AbstractFormationCoreBlockEntity;
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.FormationCoreConnectionPanel;
 import net.minecraft.network.chat.Component;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ConnectionScreen extends EasyGuiScreen {
 
     public AbstractFormationCoreBlockEntity blockEntity;

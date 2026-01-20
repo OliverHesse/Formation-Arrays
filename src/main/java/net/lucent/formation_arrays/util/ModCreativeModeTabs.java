@@ -20,11 +20,14 @@ public class ModCreativeModeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PLAYER_ACCESS_CONTROL_TOKEN.get()))
                     .title(Component.literal("formation array items"))
                     .displayItems((itemDisplayParameters, output) -> {
-                        ModItems.PLAYER_ACCESS_CONTROL_TOKEN.get();
-                        ModBlocks.TIER_1_FORMATION_CORE.get();
+                        output.accept(ModItems.PLAYER_ACCESS_CONTROL_TOKEN.get());
+                        output.accept(ModBlocks.TIER_1_FORMATION_CORE.get());
                     }).build());
 
+
+
     public static void register(IEventBus eventBus) {
+        System.out.println("registering creative mode tabs");
         CREATIVE_MODE_TAB.register(eventBus);
     }
 }

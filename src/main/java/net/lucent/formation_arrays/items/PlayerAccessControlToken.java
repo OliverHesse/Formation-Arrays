@@ -4,10 +4,12 @@ import net.lucent.formation_arrays.api.capability.IAccessControlToken;
 import net.lucent.formation_arrays.api.capability.Capabilities;
 import net.lucent.formation_arrays.data_components.ModDataComponents;
 import net.lucent.formation_arrays.data_components.components.AccessTokenComponent;
-import net.lucent.formation_arrays.gui.easy_gui_screens.AccessControlTokenScreen;
+
+import net.lucent.formation_arrays.network.client_bound.OpenAccessControlScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +17,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
 import java.util.UUID;
@@ -38,13 +42,13 @@ public class PlayerAccessControlToken extends Item {
         if(capability == null) return InteractionResultHolder.fail(item);
 
         if(level.isClientSide() && !player.isShiftKeyDown()) return InteractionResultHolder.fail(item);
-        if(capability.isLinked(item) && level.isClientSide()) {
+        if(capability.isLinked(item) && !level.isClientSide()) {
             System.out.println("is linked try to open screen");
             System.out.println(player.getUUID());
             System.out.println(capability.getOwnerId(item));
             if(player.getUUID().toString().equals(capability.getOwnerId(item))) {
                 System.out.println("CREATE");
-                Minecraft.getInstance().setScreen(new AccessControlTokenScreen(Component.empty()));
+                PacketDistributor.sendToPlayer((ServerPlayer) player,new OpenAccessControlScreen());
 
             };
             //TODO check if player is allowed to modify it. if so send packet to open menu and set access level

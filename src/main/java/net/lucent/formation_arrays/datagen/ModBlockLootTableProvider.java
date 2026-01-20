@@ -19,7 +19,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-
+        dropSelf(ModBlocks.TIER_1_FORMATION_CORE.get());
     }
 
 

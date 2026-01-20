@@ -236,6 +236,8 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
         return uuidList;
     }
 
+
+
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {

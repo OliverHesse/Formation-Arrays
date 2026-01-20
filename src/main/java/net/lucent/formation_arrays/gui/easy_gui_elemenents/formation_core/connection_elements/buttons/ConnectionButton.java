@@ -2,7 +2,10 @@ package net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.conne
 
 import net.lucent.easygui.interfaces.IEasyGuiScreen;
 import net.lucent.formation_arrays.api.formations.node.connections.IFormationConnection;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ConnectionButton extends ConnectionMenuButton {
     public final IFormationConnection<?> connection;
     public ConnectionButton(IEasyGuiScreen screen, int x, int y, IFormationConnection<?> connection) {

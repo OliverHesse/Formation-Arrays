@@ -14,5 +14,6 @@ public class lang extends LanguageProvider {
         add("creativetab.formation_arrays.formation_cores","Formation Cores");
         //items
         add("item.formation_arrays.player_access_control_token", "Player Access Token");
+        add("block.formation_arrays.tier_1_formation_core","[TIER 1] Formation Core");
     }
 }

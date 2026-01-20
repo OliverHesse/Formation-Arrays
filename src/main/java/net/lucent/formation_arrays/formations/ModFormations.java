@@ -19,7 +19,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModFormations {
     public static final DeferredRegister<IFormation> FORMATIONS = DeferredRegister.create(FormationRegistry.FORMATION_REGISTRY, FormationArrays.MOD_ID);
-
+    /*
     public static final DeferredHolder<IFormation,  ? extends GenericFormation> TEST = FORMATIONS.register("test",
             ()->new GenericFormation(Component.literal("TEST FORMATION"),null,(formation,blockPos,uuid)->
             {
@@ -53,6 +53,8 @@ public class ModFormations {
             )
 
     );
+
+     */
 
 
     public static void register(IEventBus eventBus){

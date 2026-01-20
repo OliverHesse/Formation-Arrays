@@ -24,8 +24,8 @@ public class ModBlocks {
             () -> new BaseFormationCoreEntityBlock(BlockBehaviour.Properties.of()
                     .strength(2f)
                     .requiresCorrectToolForDrops()
-                    .sound(SoundType.ANVIL)
-                    .noOcclusion(), (blockPos,blockState)->ModBlockEntities.TIER_1_FORMATION_CORE_BE.get().create(blockPos,blockState)));
+                    .noOcclusion()
+                    .sound(SoundType.ANVIL), (blockPos,blockState)->ModBlockEntities.TIER_1_FORMATION_CORE_BE.get().create(blockPos,blockState)));
 
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){

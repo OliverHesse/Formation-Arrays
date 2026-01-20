@@ -9,9 +9,11 @@ import net.lucent.formation_arrays.FormationArrays;
 import net.lucent.formation_arrays.gui.easy_gui_screens.Tier1FormationCoreScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 
-
+@OnlyIn(Dist.CLIENT)
 public class OpenConnectionButton extends AbstractButton {
     private final ITextureData defaultTexture = new TextureDataSubSection(
             ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/tier_1_formation_core_storage_screen.png"),

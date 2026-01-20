@@ -12,7 +12,10 @@ import net.lucent.formation_arrays.gui.menus.AbstractFormationCoreMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ToggleActiveStateButton extends AbstractButton {
 
     private final ITextureData defaultTexture = new TextureDataSubSection(

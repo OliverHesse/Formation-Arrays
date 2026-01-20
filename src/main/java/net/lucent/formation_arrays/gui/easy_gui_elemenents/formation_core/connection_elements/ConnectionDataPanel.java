@@ -7,7 +7,10 @@ import net.lucent.easygui.interfaces.IEasyGuiScreen;
 import net.lucent.easygui.properties.Positioning;
 import net.lucent.formation_arrays.api.formations.node.connections.IFormationConnection;
 import net.minecraft.network.chat.Component;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ConnectionDataPanel extends DynamicScrollBox {
 
     private IFormationConnection<?> connection;
@@ -23,7 +26,7 @@ public class ConnectionDataPanel extends DynamicScrollBox {
         titleLabel.useCustomScaling = true;
         titleLabel.setXPositioning(Positioning.CENTER);
         addChild(titleLabel);
-        
+
         descriptionLabel = new Label(screen,0,15,
                 Component.empty());
         descriptionLabel.setCustomScale(0.5);

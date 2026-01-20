@@ -8,7 +8,10 @@ import net.lucent.easygui.properties.Positioning;
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.inventory_menu.EnergyProgressBar;
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.inventory_menu.ToggleActiveStateButton;
 import net.minecraft.client.gui.GuiGraphics;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class FormationCoreInventoryPanel extends EmptyContainer {
 
     private final ITextureData inventoryTexture;

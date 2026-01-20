@@ -10,6 +10,6 @@ public interface IFormationFlagConditionData {
     IFormationFlagCondition getCondition();
     default boolean isFlagValid(Level level, BlockPos formationCore) {
         BlockPos flagPos = formationCore.offset(getRelativePos());
-        getCondition().run(level,flagPos,formationCore);
+        return  getCondition().run(level,flagPos,formationCore);
     }
 }

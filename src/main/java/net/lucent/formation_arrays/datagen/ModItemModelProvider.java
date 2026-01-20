@@ -13,7 +13,7 @@ public class ModItemModelProvider  extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        basicItem(ModItems.PLAYER_ACCESS_CONTROL_TOKEN.get());
+        //basicItem(ModItems.PLAYER_ACCESS_CONTROL_TOKEN.get());
 
     }
 }

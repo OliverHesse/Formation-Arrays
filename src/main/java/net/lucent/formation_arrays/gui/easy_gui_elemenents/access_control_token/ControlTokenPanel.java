@@ -15,7 +15,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ControlTokenPanel extends EmptyContainer {
     public ITextureData background = new TextureDataSubSection(
             ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/access_token/change_access_level.png"),
