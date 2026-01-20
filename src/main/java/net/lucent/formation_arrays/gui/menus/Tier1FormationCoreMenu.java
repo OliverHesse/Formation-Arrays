@@ -7,19 +7,23 @@ import net.lucent.easygui.util.inventory.EasyItemHandlerSlot;
 import net.lucent.easygui.util.inventory.EasySlot;
 import net.lucent.formation_arrays.blocks.ModBlocks;
 import net.lucent.formation_arrays.blocks.block_entities.formation_cores.AbstractFormationCoreBlockEntity;
+import net.lucent.formation_arrays.blocks.blocks.BaseFormationCoreEntityBlock;
 import net.lucent.formation_arrays.formations.FormationCoreItemStackHandler;
 import net.lucent.formation_arrays.gui.ModMenuTypes;
 import net.lucent.formation_arrays.network.server_bound.RequestNearbyCoresPayload;
 import net.lucent.formation_arrays.network.server_bound.RequestNearbyFormationsPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -48,10 +52,11 @@ public class Tier1FormationCoreMenu extends AbstractFormationCoreMenu{
         this.coreBlockEntity = blockEntity;
         createSlots();
         this.data = dataSlot;
-        System.out.println("menu created");
+
         addPlayerInventory(inventory);
         addCoreInventory();
         if(blockEntity.getLevel().isClientSide()) PacketDistributor.sendToServer(new RequestNearbyFormationsPayload(blockEntity.getBlockPos()));
+        addDataSlots(dataSlot);
     }
 
 
@@ -104,8 +109,25 @@ public class Tier1FormationCoreMenu extends AbstractFormationCoreMenu{
     }
 
     @Override
+    public void broadcastChanges() {
+        super.broadcastChanges();
+        if(!inventory.player.level().isClientSide){
+            coreBlockEntity.syncCoreSlots(inventory.player,true);
+        }
+    }
+
+    @Override
     public void setCarried(ItemStack stack) {
         if(canModify) super.setCarried(stack);
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        if(!(player instanceof ServerPlayer)) return false;
+        BlockState state = coreBlockEntity.getBlockState();
+
+        coreBlockEntity.getLevel().setBlock(coreBlockEntity.getBlockPos(),state.cycle(BaseFormationCoreEntityBlock.FORMATION_CORE_STATE), Block.UPDATE_ALL_IMMEDIATE);
+        return true;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package net.lucent.formation_arrays.api.items;
+package net.lucent.formation_arrays.api.capability;
 
 import net.lucent.formation_arrays.api.formations.IFormation;
 import net.lucent.formation_arrays.api.registries.FormationRegistry;

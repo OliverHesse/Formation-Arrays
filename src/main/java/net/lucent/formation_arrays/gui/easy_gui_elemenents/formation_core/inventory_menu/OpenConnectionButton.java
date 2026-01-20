@@ -1,4 +1,4 @@
-package net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core;
+package net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.inventory_menu;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.lucent.easygui.elements.controls.buttons.AbstractButton;

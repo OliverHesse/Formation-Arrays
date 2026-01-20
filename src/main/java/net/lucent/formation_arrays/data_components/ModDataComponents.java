@@ -26,7 +26,13 @@ public class ModDataComponents {
                     // The codec to read/write the data across the network
                     .networkSynchronized(AccessTokenComponent.STREAM_CODEC)
     );
-
+    public static final Supplier<DataComponentType<Integer>> FORMATION_FUEL = REGISTRAR.register(
+            "formation_fuel",
+            () -> DataComponentType.<Integer>builder()
+                    .persistent(Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.INT)
+                    .build()
+    );
     public static final Supplier<DataComponentType<String>> FORMATION_PLATE_COMPONENT = REGISTRAR.register(
             "formation_id",
             () -> DataComponentType.<String>builder()

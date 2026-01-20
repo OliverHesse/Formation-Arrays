@@ -18,8 +18,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
@@ -39,6 +42,7 @@ public class BaseFormationCoreEntityBlock extends BaseEntityBlock {
         this.registerDefaultState(this.defaultBlockState().setValue(FORMATION_CORE_STATE, false));
 
     }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FORMATION_CORE_STATE);
@@ -74,6 +78,14 @@ public class BaseFormationCoreEntityBlock extends BaseEntityBlock {
 
         return entity;
 
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return createTickerHelper(blockEntityType,blockEntityType,
+                (level1, blockPos, blockState, blockEntity) ->
+                        ( (AbstractFormationCoreBlockEntity)blockEntity).tick(level1, blockPos, blockState));
     }
 
     //TODO Modify to work regardless off which block was pressed;

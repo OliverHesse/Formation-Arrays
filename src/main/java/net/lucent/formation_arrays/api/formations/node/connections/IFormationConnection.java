@@ -1,6 +1,7 @@
 package net.lucent.formation_arrays.api.formations.node.connections;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
@@ -19,4 +20,8 @@ public interface IFormationConnection<T> {
     T getConnectionData(Level level);
     Component getDescription();
     Component getName();
+    String getConnectionId();
+
+    void encode(RegistryFriendlyByteBuf buf);
+    void decode(RegistryFriendlyByteBuf buf);
 }

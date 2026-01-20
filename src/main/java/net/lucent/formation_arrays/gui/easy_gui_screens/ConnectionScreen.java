@@ -9,19 +9,25 @@ import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.Format
 import net.minecraft.network.chat.Component;
 
 public class ConnectionScreen extends EasyGuiScreen {
-    public IFormationNode node;
+
     public AbstractFormationCoreBlockEntity blockEntity;
-    public ConnectionScreen(Component title, IFormationNode node, AbstractFormationCoreBlockEntity blockEntity) {
+    public int formationSlot;
+    public ConnectionScreen(Component title,AbstractFormationCoreBlockEntity blockEntity, int slot) {
         super(title);
-        this.node = node;
         View view = new View(this);
-        view.setUseMinecraftScale(true);
+        view.setUseMinecraftScale(false);
+        view.useCustomScaling = true;
+        view.setCustomScale(3);
         addView(view);
+        this.blockEntity = blockEntity;
+        this.formationSlot = slot;
+        IFormationNode node = blockEntity.formationNodeSlots[slot].getFormationNode();
         FormationCoreConnectionPanel renderable = new FormationCoreConnectionPanel(this);
         renderable.setFormationNode(node);
         view.addChild(renderable);
-        this.blockEntity = blockEntity;
+
         System.out.println("trying to create screen");
+
     }
     public AbstractFormationCoreBlockEntity getCoreBlockEntity(){return this.blockEntity;}
 }

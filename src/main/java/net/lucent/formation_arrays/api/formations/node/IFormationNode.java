@@ -1,11 +1,21 @@
 package net.lucent.formation_arrays.api.formations.node;
 
+import io.netty.buffer.ByteBuf;
 import net.lucent.formation_arrays.api.cores.IFormationCore;
+import net.lucent.formation_arrays.api.formations.IFormation;
 import net.lucent.formation_arrays.api.formations.node.connections.IFormationConnection;
+import net.lucent.formation_arrays.blocks.block_entities.formation_cores.AbstractFormationCoreBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -33,17 +43,14 @@ public interface IFormationNode {
     Collection<IFormationConnection<?>> getFormationConnections();
     Collection<IFormationPort<?>> getFormationPorts();
     String getPortId(IFormationPort<?> port);
-
+    IFormation getFormation();
     default Optional<?> runPort(String port,Level level){
         if(!hasPort(port)) return Optional.empty();
-        return Optional.of(getFormationPort(port).run(level));
+        return Optional.of(getFormationPort(port).run(level,this));
     };
-    /**
-     *  origin -> the core
-     *  yes they could probably get core from level.getBlockEntity but i feel this is better
-     */
-    void run(IFormationCore formationCore, Level level, BlockPos origin);
+
     UUID getFormationId();
+    ResourceLocation getFormationKey();
     void setFormationId(UUID id);
     int getEnergyCost();
 
@@ -56,4 +63,21 @@ public interface IFormationNode {
     default boolean tryBurnEnergy(IFormationCore core,int energy){
         return core.tryBurnEnergy(energy);
     }
+
+    void tick(AbstractFormationCoreBlockEntity blockEntity);
+
+    boolean activeLastTick();
+    void setActiveLastTick(boolean activeLastTick);
+    void deactivate(AbstractFormationCoreBlockEntity blockEntity);
+
+
+    //Saving and writing data
+
+    void encode( RegistryFriendlyByteBuf buf);
+
+    void decode(RegistryFriendlyByteBuf buf);
+
+
+    CompoundTag save( HolderLookup.Provider registries);
+    void read(CompoundTag tag,HolderLookup.Provider registries);
 }

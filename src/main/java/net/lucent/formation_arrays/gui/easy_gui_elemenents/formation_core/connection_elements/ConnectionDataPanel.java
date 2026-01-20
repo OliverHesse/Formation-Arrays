@@ -23,7 +23,7 @@ public class ConnectionDataPanel extends DynamicScrollBox {
         titleLabel.useCustomScaling = true;
         titleLabel.setXPositioning(Positioning.CENTER);
         addChild(titleLabel);
-
+        
         descriptionLabel = new Label(screen,0,15,
                 Component.empty());
         descriptionLabel.setCustomScale(0.5);

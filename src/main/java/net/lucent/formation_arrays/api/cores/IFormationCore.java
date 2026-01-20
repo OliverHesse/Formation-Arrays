@@ -14,7 +14,7 @@ public interface IFormationCore {
     List<UUID> getFormationNodeIDs();
     IFormationNode getFormationNode(UUID formationId);
     ResourceLocation getFormationRegistryId(UUID formationId);
-    IFormationPort<?> getFormationPort(UUID formationId, String portId, String portType);
+    IFormationPort<?> getFormationPort(UUID formationId, String portId);
     ICoreEnergyContainer getEnergyContainer();
     ItemStack getFormationItemStack(UUID formation);
     List<ItemStack> getFormationJadeSlips(UUID formation);
@@ -24,4 +24,6 @@ public interface IFormationCore {
      default boolean tryBurnEnergy(int energy) {
          return getEnergyContainer().tryDecreaseEnergy(energy);
      }
+
+
 }

@@ -5,7 +5,8 @@ import net.lucent.easygui.elements.inventory.DisplaySlot;
 import net.lucent.easygui.interfaces.IEasyGuiScreen;
 import net.lucent.easygui.interfaces.ITextureData;
 import net.lucent.easygui.properties.Positioning;
-import net.minecraft.client.Minecraft;
+import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.inventory_menu.EnergyProgressBar;
+import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.inventory_menu.ToggleActiveStateButton;
 import net.minecraft.client.gui.GuiGraphics;
 
 public class FormationCoreInventoryPanel extends EmptyContainer {
@@ -20,19 +21,20 @@ public class FormationCoreInventoryPanel extends EmptyContainer {
         setY(-inventoryTexture.getHeight()/2);
         setWidth(inventoryTexture.getWidth());
         setHeight(inventoryTexture.getHeight());
-
+        addChild(new EnergyProgressBar(screen,8,9,16,62));
+        addChild(new ToggleActiveStateButton(screen,136,5));
 
     }
+
+    @Override
+    public boolean isMouseOver(double mouseX, double mouseY) {
+        return super.isMouseOver(mouseX, mouseY);
+    }
+
     public void addPlayerInventory() {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                addChild(new DisplaySlot(getScreen(),8 + l * 18, 101 + i * 18,16,16,"p" + (l + i * 9 + 9)){
-                    @Override
-                    public void renderSelf(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-                        super.renderSelf(guiGraphics, mouseX, mouseY, partialTick);
-                        guiGraphics.drawString(Minecraft.getInstance().font,"slot",0,0,-1,true);
-                    }
-                });
+                addChild(new DisplaySlot(getScreen(),8 + l * 18, 101 + i * 18,16,16,"p" + (l + i * 9 + 9)));
             }
         }
     }

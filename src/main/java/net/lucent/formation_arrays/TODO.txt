@@ -5,3 +5,5 @@ get connection to return null if formation it is trying to access is in unloaded
 
 
 create a custom type object? and they have to register it and pass the registry key?
+
+SEND CORE SLOT CHANGES TO EVERY BLOCK ENTITY SO THEY HAVE ACCESS TO THE FORMATION NODE FOR THE TICKER

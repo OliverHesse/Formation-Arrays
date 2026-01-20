@@ -19,8 +19,11 @@ import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.connec
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.connection_elements.buttons.PortButton;
 import net.lucent.formation_arrays.gui.easy_gui_screens.ConnectionScreen;
 import net.lucent.formation_arrays.gui.easy_gui_screens.Tier1FormationCoreScreen;
+import net.lucent.formation_arrays.network.server_bound.UpdateFormationConnectionStatus;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
 
@@ -100,8 +103,23 @@ public class FormationCoreConnectionPanel extends EmptyContainer {
     }
     public void selectPort(IFormationPort<?> port){}
 
+
     //TODO
-    public void tryConnect(){}
+    public void tryConnect(){
+        UpdateFormationConnectionStatus.ConnectionData  connectionData= new UpdateFormationConnectionStatus.ConnectionData(
+                ((ConnectionScreen) getScreen()).getCoreBlockEntity().getBlockPos(),
+                ((ConnectionScreen) getScreen()).formationSlot,
+                formationConnection.getConnectionId()
+        );
+        UpdateFormationConnectionStatus.PortData portData = new UpdateFormationConnectionStatus.PortData(
+                availablePort.coreLocation(),
+                availablePort.formationId().toString(),
+                availablePort.portId()
+        );
+        PacketDistributor.sendToServer(new UpdateFormationConnectionStatus(connectionData,portData,portDataScrollBox.mode));
+        Minecraft.getInstance().setScreen(null);
+
+    }
 
     public void setFormationNode(IFormationNode node){
         this.formationNode = node;
@@ -110,7 +128,9 @@ public class FormationCoreConnectionPanel extends EmptyContainer {
         portDataScrollBox.clear();
         connectionDataScrollBox.clear();
         int y = 0;
+
         for( IFormationConnection<?> connection : formationNode.getFormationConnections()){
+
             y = createConnectionBtn(connection,y);
         }
     }

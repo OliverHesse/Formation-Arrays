@@ -8,7 +8,6 @@ import net.lucent.formation_arrays.api.formations.node.AvailablePort;
 import net.lucent.formation_arrays.api.formations.node.IFormationNode;
 import net.lucent.formation_arrays.api.formations.node.IFormationPort;
 import net.lucent.formation_arrays.api.formations.node.connections.IFormationConnection;
-import net.lucent.formation_arrays.api.items.IFormationHolder;
 import net.lucent.formation_arrays.api.registries.FormationRegistry;
 import net.lucent.formation_arrays.network.client_bound.UpdateNearbyFormations;
 import net.minecraft.core.BlockPos;

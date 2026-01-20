@@ -9,4 +9,8 @@ public class LoggerUtils {
         FormationArrays.LOGGER.error("error when trying to get data from port: {} and connection: {}. mismatched data types. formation core: {}", port, connectionName, coreLocation.toString());
 
     }
+    public static void sameTypeCastingError(String port, String connectionName, BlockPos coreLocation){
+        FormationArrays.LOGGER.error("error when trying to cast data from port: {} and connection: {}. mismatched data types. formation core: {}", port, connectionName, coreLocation.toString());
+
+    }
 }

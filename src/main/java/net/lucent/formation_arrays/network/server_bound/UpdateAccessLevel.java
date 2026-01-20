@@ -3,7 +3,7 @@ package net.lucent.formation_arrays.network.server_bound;
 import io.netty.buffer.ByteBuf;
 import net.lucent.formation_arrays.FormationArrays;
 import net.lucent.formation_arrays.api.capability.IAccessControlToken;
-import net.lucent.formation_arrays.capabilities.ModCapabilities;
+import net.lucent.formation_arrays.api.capability.Capabilities;
 import net.lucent.formation_arrays.capabilities.tokens.PlayerAccessToken;
 import net.lucent.formation_arrays.data_components.ModDataComponents;
 import net.lucent.formation_arrays.network.client_bound.SyncAccessToken;
@@ -33,7 +33,7 @@ public record UpdateAccessLevel(int accessLevelChange) implements CustomPacketPa
 
 
         ItemStack stack =  context.player().getItemInHand(InteractionHand.MAIN_HAND);
-        IAccessControlToken capability = stack.getCapability(ModCapabilities.ACCESS_TOKEN_CAPABILITY);
+        IAccessControlToken capability = stack.getCapability(Capabilities.ACCESS_TOKEN_CAPABILITY);
         if(capability == null) return;
         capability.tryUpdateAccessLevel(context.player(),stack,payload.accessLevelChange());
         if(capability instanceof PlayerAccessToken){

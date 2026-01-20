@@ -18,8 +18,5 @@ public record FormationFlagConditionData(Vec3i relativePos, IFormationFlagCondit
         return condition();
     }
 
-    @Override
-    public boolean isFlagValid(Block formationCore) {
-        return false;
-    }
+
 }

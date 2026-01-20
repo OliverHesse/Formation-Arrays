@@ -9,7 +9,14 @@ public class NBTUtil {
         int x = tag.getInt("x");
         int y = tag.getInt("y");
         int z = tag.getInt("z");
-        return new BlockPos(x,y,z);
 
+        return new BlockPos(x,y,z);
+    }
+    public static CompoundTag blockPos(BlockPos pos){
+       CompoundTag tag =  new CompoundTag();
+       tag.putInt("x",pos.getX());
+       tag.putInt("y",pos.getY());
+       tag.putInt("z",pos.getZ());
+       return tag;
     }
 }

@@ -1,12 +1,11 @@
 package net.lucent.formation_arrays.network;
 
 import net.lucent.formation_arrays.FormationArrays;
-import net.lucent.formation_arrays.network.client_bound.SyncAccessToken;
-import net.lucent.formation_arrays.network.client_bound.UpdateNearbyCores;
-import net.lucent.formation_arrays.network.client_bound.UpdateNearbyFormations;
+import net.lucent.formation_arrays.network.client_bound.*;
 import net.lucent.formation_arrays.network.server_bound.RequestNearbyCoresPayload;
 import net.lucent.formation_arrays.network.server_bound.RequestNearbyFormationsPayload;
 import net.lucent.formation_arrays.network.server_bound.UpdateAccessLevel;
+import net.lucent.formation_arrays.network.server_bound.UpdateFormationConnectionStatus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -30,6 +29,11 @@ public class ModPayloads {
                 RequestNearbyFormationsPayload.STREAM_CODEC,
                 RequestNearbyFormationsPayload::handlePayload
         );
+        registrar.playToServer(
+                UpdateFormationConnectionStatus.TYPE,
+                UpdateFormationConnectionStatus.STREAM_CODEC,
+                UpdateFormationConnectionStatus::handlePayload
+        );
     }
     public static void  registerClientPayloads(PayloadRegistrar registrar){
         registrar.playToClient(
@@ -46,6 +50,16 @@ public class ModPayloads {
                 UpdateNearbyFormations.TYPE,
                 UpdateNearbyFormations.STREAM_CODEC,
                 UpdateNearbyFormations::handlePayload
+        );
+        registrar.playToClient(
+                SyncCoreSlotData.TYPE,
+                SyncCoreSlotData.STREAM_CODEC,
+                SyncCoreSlotData::handlePayload
+        );
+        registrar.playToClient(
+                SyncFormationCoreSlotData.TYPE,
+                SyncFormationCoreSlotData.STREAM_CODEC,
+                SyncFormationCoreSlotData::handlePayload
         );
     }
     @SubscribeEvent

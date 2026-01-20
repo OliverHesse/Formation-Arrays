@@ -1,7 +1,7 @@
 package net.lucent.formation_arrays.items;
 
 import net.lucent.formation_arrays.api.capability.IAccessControlToken;
-import net.lucent.formation_arrays.capabilities.ModCapabilities;
+import net.lucent.formation_arrays.api.capability.Capabilities;
 import net.lucent.formation_arrays.data_components.ModDataComponents;
 import net.lucent.formation_arrays.data_components.components.AccessTokenComponent;
 import net.lucent.formation_arrays.gui.easy_gui_screens.AccessControlTokenScreen;
@@ -9,7 +9,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -35,7 +34,7 @@ public class PlayerAccessControlToken extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack item = player.getItemInHand(usedHand);
-        IAccessControlToken capability = item.getCapability(ModCapabilities.ACCESS_TOKEN_CAPABILITY);
+        IAccessControlToken capability = item.getCapability(Capabilities.ACCESS_TOKEN_CAPABILITY);
         if(capability == null) return InteractionResultHolder.fail(item);
 
         if(level.isClientSide() && !player.isShiftKeyDown()) return InteractionResultHolder.fail(item);
@@ -62,7 +61,7 @@ public class PlayerAccessControlToken extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        IAccessControlToken capability = stack.getCapability(ModCapabilities.ACCESS_TOKEN_CAPABILITY);
+        IAccessControlToken capability = stack.getCapability(Capabilities.ACCESS_TOKEN_CAPABILITY);
         if(capability == null) {
             super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
             return;
@@ -90,7 +89,7 @@ public class PlayerAccessControlToken extends Item {
     }
 
     public void updateTokenDisplayName(ItemStack controlToken, Level level){
-        IAccessControlToken capability = controlToken.getCapability(ModCapabilities.ACCESS_TOKEN_CAPABILITY);
+        IAccessControlToken capability = controlToken.getCapability(Capabilities.ACCESS_TOKEN_CAPABILITY);
         if(capability == null) return;
 
         Player player = level.getPlayerByUUID(UUID.fromString(capability.getOwnerId(controlToken)));

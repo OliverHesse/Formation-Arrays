@@ -3,6 +3,7 @@ package net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core;
 import net.lucent.easygui.elements.inventory.DisplayItemHandlerSlot;
 import net.lucent.easygui.interfaces.IEasyGuiScreen;
 import net.lucent.easygui.interfaces.ITextureData;
+import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.inventory_menu.OpenConnectionButton;
 
 public class Tier1FormationCoreInventoryPanel extends FormationCoreInventoryPanel{
     public Tier1FormationCoreInventoryPanel(IEasyGuiScreen easyGuiScreen, ITextureData inventoryTexture) {

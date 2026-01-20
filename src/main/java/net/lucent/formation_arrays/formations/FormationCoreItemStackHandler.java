@@ -1,13 +1,11 @@
 package net.lucent.formation_arrays.formations;
 
 import net.lucent.formation_arrays.api.formations.IFormation;
-import net.lucent.formation_arrays.api.capability.IAccessControlToken;
-import net.lucent.formation_arrays.api.items.IFormationHolder;
+import net.lucent.formation_arrays.api.capability.IFormationHolder;
 import net.lucent.formation_arrays.blocks.block_entities.formation_cores.AbstractFormationCoreBlockEntity;
-import net.lucent.formation_arrays.capabilities.ModCapabilities;
+import net.lucent.formation_arrays.api.capability.Capabilities;
 import net.lucent.formation_arrays.util.ModTags;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.ArrayList;
@@ -55,9 +53,9 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
         //WHERE TAGS AND instance of comes in
-        if(slot == ACCESS_CONTROL_TOKEN_SLOT) return stack.getCapability(ModCapabilities.ACCESS_TOKEN_CAPABILITY) != null;
+        if(slot == ACCESS_CONTROL_TOKEN_SLOT) return stack.getCapability(Capabilities.ACCESS_TOKEN_CAPABILITY) != null;
         if(JADE_SLIP_SLOTS.contains(slot)) return stack.is(ModTags.Items.JADE_SLIP);
-        if(slot >= 1 && slot <= FUEL_SLOTS) return stack.is(ModTags.Items.FORMATION_CORE_FUEL);
+        if(slot >= 1 && slot <= FUEL_SLOTS) return stack.getCapability(Capabilities.FORMATION_FUEL_CAPABILITY) != null;
         if(FORMATION_SLOTS.contains(slot)) return stack.getItem() instanceof IFormationHolder;
         return super.isItemValid(slot, stack);
     }
@@ -80,7 +78,7 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
     }
     public ItemStack getFormationItemStack(int slot){
         if(slot >=0 && slot < MAX_FORMATIONS) return getStackInSlot(FORMATION_SLOTS.get(slot));
-        return null;
+        return ItemStack.EMPTY;
     }
     public List<ItemStack> getFormationJadeSlips(int slot){
         if(slot < 0 || slot >= MAX_FORMATIONS) return List.of();
@@ -99,13 +97,12 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
         @Override
         protected void onContentsChanged(int slot) {
             entity.setChanged();
-            if(FORMATION_SLOTS.contains(slot)){
-                entity.updateFormationSlot(FORMATION_SLOTS.indexOf(slot));
 
-            }
             if (!entity.getLevel().isClientSide()) {
                 entity.getLevel().sendBlockUpdated(entity.getBlockPos(),entity.getBlockState(),entity.getBlockState(),3);
-
+                if(FORMATION_SLOTS.contains(slot)){
+                    entity.updateFormationSlot(FORMATION_SLOTS.indexOf(slot));
+                }
             }
         }
 
