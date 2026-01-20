@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "formation_arrays:block/tier_1_formation_core"
+  }
+}

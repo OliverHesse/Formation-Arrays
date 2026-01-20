@@ -4,6 +4,7 @@ import net.lucent.formation_arrays.api.formations.IFormation;
 import net.lucent.formation_arrays.api.capability.IFormationHolder;
 import net.lucent.formation_arrays.blocks.block_entities.formation_cores.AbstractFormationCoreBlockEntity;
 import net.lucent.formation_arrays.api.capability.Capabilities;
+import net.lucent.formation_arrays.capabilities.ModCapabilities;
 import net.lucent.formation_arrays.util.ModTags;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -56,7 +57,7 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
         if(slot == ACCESS_CONTROL_TOKEN_SLOT) return stack.getCapability(Capabilities.ACCESS_TOKEN_CAPABILITY) != null;
         if(JADE_SLIP_SLOTS.contains(slot)) return stack.is(ModTags.Items.JADE_SLIP);
         if(slot >= 1 && slot <= FUEL_SLOTS) return stack.getCapability(Capabilities.FORMATION_FUEL_CAPABILITY) != null;
-        if(FORMATION_SLOTS.contains(slot)) return stack.getItem() instanceof IFormationHolder;
+        if(FORMATION_SLOTS.contains(slot)) return stack.getCapability(Capabilities.FORMATION_HOLDER_CAPABILITY) != null;
         return super.isItemValid(slot, stack);
     }
     public ItemStack getFirstAvailableFuelItem(){
@@ -92,7 +93,9 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
     public IFormation getFormation(int slot){
         ItemStack item = getFormationItemStack(slot);
         if(item.equals(ItemStack.EMPTY)) return null;
-        return ((IFormationHolder) item.getItem()).getFormation(item);
+        IFormationHolder formationHolder = item.getCapability(Capabilities.FORMATION_HOLDER_CAPABILITY);
+        if(formationHolder ==null) return null;
+        return formationHolder.getFormation(item);
     }
         @Override
         protected void onContentsChanged(int slot) {
