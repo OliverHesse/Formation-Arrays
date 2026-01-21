@@ -10,6 +10,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 @EventBusSubscriber(modid = FormationArrays.MOD_ID,bus = EventBusSubscriber.Bus.MOD)
@@ -21,6 +22,7 @@ public class FormationRegistry {
             .defaultKey(ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"none"))
             .create();
 
+    @OnlyIn(Dist.CLIENT)
     public static class FormationRenderers{
         public static final ResourceKey<Registry<IFormationRenderer>> RENDERERS_KEY = ResourceKey.createRegistryKey(ResourceLocation
                 .fromNamespaceAndPath(FormationArrays.MOD_ID,"formation_renderers"));
@@ -30,10 +32,14 @@ public class FormationRegistry {
 
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public static void registerClientFormations(NewRegistryEvent event){
+        event.register(FormationRenderers.RENDERERS_REGISTRY);
+    }
 
     @SubscribeEvent
     public static void register(NewRegistryEvent event){
         event.register(FORMATION_REGISTRY);
-        event.register(FormationRenderers.RENDERERS_REGISTRY);
+        if(FMLLoader.getDist() == Dist.CLIENT)registerClientFormations(event);
     }
 }

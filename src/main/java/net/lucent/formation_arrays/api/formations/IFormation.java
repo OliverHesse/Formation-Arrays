@@ -20,7 +20,7 @@ public interface IFormation {
     public interface IFormationNodeSupplier{
         IFormationNode run(BlockPos pos,UUID formationId);
     }
-    IFormationRenderer getFormationRenderer();
+    ResourceLocation getFormationRenderer();
     boolean hasRenderer();
     IFormationNode getNewFormationNode(BlockPos corePos, UUID formationId);
     List<FormationFlagConditionData> getFormationFlagConditions();

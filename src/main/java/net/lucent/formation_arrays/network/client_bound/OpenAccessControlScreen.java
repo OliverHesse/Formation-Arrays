@@ -31,7 +31,7 @@ public record OpenAccessControlScreen()implements CustomPacketPayload {
 
 
 
-        context.enqueueWork(() -> {if(FMLLoader.getDist() == Dist.CLIENT)handleOnClient();});
+            context.enqueueWork(() -> {if(FMLLoader.getDist() == Dist.CLIENT)handleOnClient();});
 
     }
     /**

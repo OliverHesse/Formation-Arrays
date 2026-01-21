@@ -34,8 +34,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -92,7 +94,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
             formationNodeSlots[i] = CoreNodeSlot.createEmpty();
         }
         FormationArrays.getCoreManager().addCore(pos);
-        NeoForge.EVENT_BUS.addListener(this::onRenderLevel);
+        if(FMLLoader.getDist() == Dist.CLIENT) NeoForge.EVENT_BUS.addListener(this::onRenderLevel);
     }
 
     public FormationCoreItemStackHandler getFormationItemStackHandler(){
@@ -327,14 +329,16 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
     }
 
 
-
+    @OnlyIn(Dist.CLIENT)
     public void onRenderLevel(RenderLevelStageEvent event) {
         if(getBlockState().getValue(BaseFormationCoreEntityBlock.FORMATION_CORE_STATE)){
             //ACTIVE SO RUN
             for(CoreNodeSlot slot : formationNodeSlots){
                 if(slot.getFormationNode() == null) continue;
                 if(slot.getFormationNode().getFormation().getFormationRenderer() == null) continue;
-                slot.getFormationNode().getFormation().getFormationRenderer().render(event,getBlockPos(),slot.getFormationNode());
+                FormationRegistry.FormationRenderers.RENDERERS_REGISTRY.get(
+                        slot.getFormationNode().getFormation().getFormationRenderer()
+                ).render(event,getBlockPos(),slot.getFormationNode());
             }
         }
     }

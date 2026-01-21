@@ -6,6 +6,7 @@ import net.lucent.formation_arrays.api.formations.node.IFormationNode;
 import net.lucent.formation_arrays.formations.flags.FormationFlagConditionData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,15 +18,15 @@ public class GenericFormation implements IFormation {
     }
     Component displayName;
     IFormationNodeSupplier supplier;
-    private final IFormationRenderer formationRenderer;
-    public GenericFormation(Component displayName,IFormationRenderer renderer,IFormationNodeSupplier supplier){
+    private final ResourceLocation formationRenderer;
+    public GenericFormation(Component displayName,ResourceLocation renderer,IFormationNodeSupplier supplier){
         this.supplier = supplier;
         this.displayName = displayName;
         this.formationRenderer = renderer;
     }
 
     @Override
-    public IFormationRenderer getFormationRenderer() {
+    public ResourceLocation getFormationRenderer() {
         return formationRenderer;
     }
 
