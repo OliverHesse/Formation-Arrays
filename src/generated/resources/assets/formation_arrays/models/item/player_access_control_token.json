@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "formation_arrays:item/player_access_control_token"
+  }
+}

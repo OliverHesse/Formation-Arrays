@@ -19,6 +19,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.checkerframework.checker.units.qual.C;
 
@@ -109,6 +110,11 @@ public class FormationNode implements IFormationNode {
     }
 
     @Override
+    public void tick(AbstractFormationCoreBlockEntity blockEntity, List<ItemStack> jadeSlips) {
+
+    }
+
+    @Override
     public void encode(RegistryFriendlyByteBuf buf) {
         for(IFormationConnection<?> connection :getFormationConnections()){
             connection.encode(buf);
@@ -122,10 +128,6 @@ public class FormationNode implements IFormationNode {
         }
     }
 
-    @Override
-    public void tick(AbstractFormationCoreBlockEntity blockEntity) {
-
-    }
 
     @Override
     public boolean activeLastTick() {

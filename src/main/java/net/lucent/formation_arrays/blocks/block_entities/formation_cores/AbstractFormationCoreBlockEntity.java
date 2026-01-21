@@ -99,6 +99,8 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
         return formationItemStackHandler;
     }
 
+
+
     public void updateFormationSlot(int slot){
         ItemStack itemStack = formationItemStackHandler.getFormationItemStack(slot);
         if(itemStack == null || itemStack.equals(ItemStack.EMPTY)) {
@@ -275,7 +277,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
         for(IFormationFlagConditionData conditionData : node.getFormation().getFormationFlagConditions()){
             if(!conditionData.isFlagValid(level,getBlockPos())) return;
         }
-        node.tick(this);
+        node.tick(this,getFormationJadeSlips(node.getFormationId()));
     }
 
     public void tick(Level level, BlockPos blockPos, BlockState blockState){
@@ -291,6 +293,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
             //ACTIVE SO RUN
 
             if(level.isClientSide()){
+
                 for(CoreNodeSlot slot : formationNodeSlots){
                     if(slot.getFormationNode() == null) continue;
                     runFormationNode(level,slot.getFormationNode());
@@ -322,6 +325,8 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
 
         }
     }
+
+
 
     public void onRenderLevel(RenderLevelStageEvent event) {
         if(getBlockState().getValue(BaseFormationCoreEntityBlock.FORMATION_CORE_STATE)){

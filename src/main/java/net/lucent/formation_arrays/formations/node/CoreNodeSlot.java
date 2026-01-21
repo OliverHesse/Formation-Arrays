@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class CoreNodeSlot {
         markDirty();
     }
     public void setFormationNode(IFormationNode node){
+        if(formationNode != null) NeoForge.EVENT_BUS.unregister(formationNode);
         this.formationNode = node;
         markDirty();
     }

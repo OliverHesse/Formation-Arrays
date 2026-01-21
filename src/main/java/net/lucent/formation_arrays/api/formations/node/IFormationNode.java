@@ -64,7 +64,7 @@ public interface IFormationNode {
         return core.tryBurnEnergy(energy);
     }
 
-    void tick(AbstractFormationCoreBlockEntity blockEntity);
+    void tick(AbstractFormationCoreBlockEntity blockEntity,List<ItemStack> jadeSlips);
 
     boolean activeLastTick();
     void setActiveLastTick(boolean activeLastTick);
