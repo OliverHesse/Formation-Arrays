@@ -10,12 +10,12 @@ import java.util.*;
 
 public interface ICoreManager {
 
-    List<AvailablePort> getAvailablePorts(Level level, BlockPos origin, int radius, IFormationNode formation, IFormationConnection<?> connection);
+    List<AvailablePort> getAvailablePorts(Level level, BlockPos origin, double radius, IFormationNode formation, IFormationConnection<?> connection);
     Set<BlockPos> getCores();
     void removeCore(BlockPos blockPos);
     void addCore(BlockPos blockPos);
 
-    default Set<BlockPos> getNearbyCores(Level level, BlockPos origin, int radius){
+    default Set<BlockPos> getNearbyCores(Level level, BlockPos origin, double radius){
         System.out.println("trying to get nearby cores");
         //some basic checks to stop crashes
         if(level.getBlockEntity(origin) == null ||!(level.getBlockEntity(origin) instanceof IFormationCore originCore)) return Set.of();

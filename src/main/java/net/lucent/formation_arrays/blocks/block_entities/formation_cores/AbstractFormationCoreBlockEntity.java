@@ -78,9 +78,29 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
     };
 
     @Override
+    public void setRemoved() {
+
+        FormationArrays.getCoreManager().removeCore(getBlockPos());
+
+        for(CoreNodeSlot slot : formationNodeSlots){
+            if(slot.getFormationNode() == null) continue;
+            slot.getFormationNode().deactivate(this);
+            slot.setFormationNode(null);
+        }
+        super.setRemoved();
+
+
+    }
+
+    @Override
     public void onChunkUnloaded() {
         super.onChunkUnloaded();
         FormationArrays.getCoreManager().removeCore(getBlockPos());
+        for(CoreNodeSlot slot : formationNodeSlots){
+            if(slot.getFormationNode() == null) continue;
+            slot.getFormationNode().deactivate(this);
+            slot.setFormationNode(null);
+        }
     }
 
     public AbstractFormationCoreBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, ICoreEnergyContainer energyContainer, FormationCoreItemStackHandler itemStackHandler) {
@@ -352,6 +372,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
         super.saveAdditional(tag, registries);
         System.out.println("SAVING BE STORAGE");
         tag.put("inventory",formationItemStackHandler.serializeNBT(registries));
+        getEnergyContainer().increaseEnergy(tag.getInt("energy"));
         ListTag coreSlots = new ListTag();
         for(int i =0;i<formationNodeSlots.length;i++){
             CompoundTag slotTag = new CompoundTag();
@@ -367,13 +388,14 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
             coreSlots.add(slotTag);
         }
         tag.put("core_slot_data",coreSlots);
-        //TODO add qi
+
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         formationItemStackHandler.deserializeNBT(registries,tag.getCompound("inventory"));
+        tag.putInt("energy",getEnergyContainer().getCurrentEnergy());
         ListTag coreData = tag.getList("core_slot_data", CompoundTag.TAG_COMPOUND);
         for(int i = 0;i<formationNodeSlots.length;i++){
             CompoundTag data = coreData.getCompound(i);
@@ -389,6 +411,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
 
             updateFormationSlot(i);
         }
-        //TODO add qi
+
+
     }
 }

@@ -66,9 +66,7 @@ public class BaseFormationCoreEntityBlock extends BaseEntityBlock {
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         super.onRemove(state, level, pos, newState, movedByPiston);
-        if(!level.isClientSide()){
-            FormationArrays.getCoreManager().removeCore(pos);
-        }
+
     }
 
     @Override

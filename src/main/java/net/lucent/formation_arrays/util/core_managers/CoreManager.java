@@ -24,7 +24,7 @@ public class CoreManager extends SavedData implements ICoreManager {
 
 
     @Override
-    public List<AvailablePort> getAvailablePorts(Level level, BlockPos origin, int radius, IFormationNode formation, IFormationConnection<?> connection) {
+    public List<AvailablePort> getAvailablePorts(Level level, BlockPos origin, double radius, IFormationNode formation, IFormationConnection<?> connection) {
         Set<BlockPos> cores = getNearbyCores(level,origin,radius);
         List<AvailablePort> ports = new ArrayList<>();
         for(BlockPos pos : cores){

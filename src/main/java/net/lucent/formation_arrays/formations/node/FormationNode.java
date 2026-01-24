@@ -106,7 +106,7 @@ public class FormationNode implements IFormationNode {
 
     @Override
     public int getEnergyCost() {
-        return 5;
+        return 0;
     }
 
     @Override
