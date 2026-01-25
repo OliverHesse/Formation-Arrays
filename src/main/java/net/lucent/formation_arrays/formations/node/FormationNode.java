@@ -110,7 +110,7 @@ public class FormationNode implements IFormationNode {
     }
 
     @Override
-    public void tick(AbstractFormationCoreBlockEntity blockEntity, List<ItemStack> jadeSlips) {
+    public void tick(IFormationCore blockEntity, List<ItemStack> jadeSlips) {
 
     }
 
@@ -140,7 +140,7 @@ public class FormationNode implements IFormationNode {
     }
 
     @Override
-    public void deactivate(AbstractFormationCoreBlockEntity blockEntity) {
+    public void deactivate(IFormationCore blockEntity) {
 
     }
 

@@ -3,7 +3,7 @@ package net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.inven
 import net.lucent.easygui.elements.containers.EmptyContainer;
 import net.lucent.easygui.elements.tooltips.EasyTooltip;
 import net.lucent.easygui.interfaces.IEasyGuiScreen;
-import net.lucent.formation_arrays.gui.easy_gui_screens.Tier1FormationCoreScreen;
+import net.lucent.formation_arrays.gui.easy_gui_screens.VariedSlotCountFormationCoreScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
@@ -16,11 +16,11 @@ public class EnergyProgressBar extends EmptyContainer {
     int MAX_QI;
     public EnergyProgressBar(IEasyGuiScreen screen, int x, int y, int width, int height){
         super(screen,x,y,width,height);
-        MAX_QI = ((Tier1FormationCoreScreen) getScreen()).getCoreBlockEntity().getEnergyContainer().getMaxEnergy();
+        MAX_QI = ((VariedSlotCountFormationCoreScreen) getScreen()).getCoreBlockEntity().getEnergyContainer().getMaxEnergy();
     }
 
     public double getPercentage(){
-        return (double) ((Tier1FormationCoreScreen) getScreen()).getMenu().data.get(0) /MAX_QI;
+        return (double) ((VariedSlotCountFormationCoreScreen) getScreen()).getMenu().getData().get(0) /MAX_QI;
     }
 
 
@@ -40,7 +40,7 @@ public class EnergyProgressBar extends EmptyContainer {
 
         if(hovered){
 
-            getScreen().setTooltip(new EasyTooltip(mouseX,mouseY, List.of(Component.literal(String.valueOf(((Tier1FormationCoreScreen) getScreen()).getMenu().data.get(0))))));
+            getScreen().setTooltip(new EasyTooltip(mouseX,mouseY, List.of(Component.literal(String.valueOf(((VariedSlotCountFormationCoreScreen) getScreen()).getMenu().getData().get(0))))));
         }
     }
 }

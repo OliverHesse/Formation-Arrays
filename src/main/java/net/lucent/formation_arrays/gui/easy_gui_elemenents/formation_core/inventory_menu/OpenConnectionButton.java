@@ -6,7 +6,7 @@ import net.lucent.easygui.interfaces.IEasyGuiScreen;
 import net.lucent.easygui.interfaces.ITextureData;
 import net.lucent.easygui.util.textures.TextureDataSubSection;
 import net.lucent.formation_arrays.FormationArrays;
-import net.lucent.formation_arrays.gui.easy_gui_screens.Tier1FormationCoreScreen;
+import net.lucent.formation_arrays.gui.easy_gui_screens.VariedSlotCountFormationCoreScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -16,15 +16,15 @@ import net.neoforged.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class OpenConnectionButton extends AbstractButton {
     private final ITextureData defaultTexture = new TextureDataSubSection(
-            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/tier_1_formation_core_storage_screen.png"),
+            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/generic_storage_screen.png"),
             256,256,
             197,5,208,16);
     private final ITextureData hoverTexture = new TextureDataSubSection(
-            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/tier_1_formation_core_storage_screen.png"),
+            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/generic_storage_screen.png"),
             256,256,
             197,17,225,28);
     private final ITextureData pressTexture = new TextureDataSubSection(
-            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/tier_1_formation_core_storage_screen.png"),
+            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/generic_storage_screen.png"),
             256,256,
             197,30,225,40);
     public final int slot;
@@ -36,7 +36,7 @@ public class OpenConnectionButton extends AbstractButton {
     @Override
     public void onClick(double mouseX, double mouseY, int button, boolean clicked) {
         super.onClick(mouseX, mouseY, button, clicked);
-        if(clicked &&button == InputConstants.MOUSE_BUTTON_LEFT) ((Tier1FormationCoreScreen) getScreen()).openConnectionPanel(slot);
+        if(clicked &&button == InputConstants.MOUSE_BUTTON_LEFT) ((VariedSlotCountFormationCoreScreen) getScreen()).openConnectionPanel(slot);
     }
 
     @Override

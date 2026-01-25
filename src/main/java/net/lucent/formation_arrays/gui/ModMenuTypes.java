@@ -1,7 +1,7 @@
 package net.lucent.formation_arrays.gui;
 
 import net.lucent.formation_arrays.FormationArrays;
-import net.lucent.formation_arrays.gui.menus.Tier1FormationCoreMenu;
+import net.lucent.formation_arrays.gui.menus.VariedSlotCountFormationCoreMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -15,8 +15,8 @@ public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(Registries.MENU, FormationArrays.MOD_ID);
 
-    public static final DeferredHolder<MenuType<?>, MenuType<Tier1FormationCoreMenu>> TIER_1_FORMATION_CORE_MENU =
-            registerMenuType("tier_1_formation_core_menu", Tier1FormationCoreMenu::new);
+    public static final DeferredHolder<MenuType<?>, MenuType<VariedSlotCountFormationCoreMenu>> TIER_1_FORMATION_CORE_MENU =
+            registerMenuType("tier_1_formation_core_menu", VariedSlotCountFormationCoreMenu::new);
 
 
 

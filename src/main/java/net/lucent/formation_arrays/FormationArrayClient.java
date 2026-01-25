@@ -2,7 +2,7 @@ package net.lucent.formation_arrays;
 
 
 import net.lucent.formation_arrays.gui.ModMenuTypes;
-import net.lucent.formation_arrays.gui.easy_gui_screens.Tier1FormationCoreScreen;
+import net.lucent.formation_arrays.gui.easy_gui_screens.VariedSlotCountFormationCoreScreen;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -17,7 +17,7 @@ public class FormationArrayClient {
     public static class ClientEvents{
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
-            event.register(ModMenuTypes.TIER_1_FORMATION_CORE_MENU.get(), Tier1FormationCoreScreen::new);
+            event.register(ModMenuTypes.TIER_1_FORMATION_CORE_MENU.get(), VariedSlotCountFormationCoreScreen::new);
 
         }
 

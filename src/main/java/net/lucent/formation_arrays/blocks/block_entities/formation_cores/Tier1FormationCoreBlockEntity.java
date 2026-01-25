@@ -1,22 +1,15 @@
 package net.lucent.formation_arrays.blocks.block_entities.formation_cores;
 
 import net.lucent.formation_arrays.api.cores.ICoreEnergyContainer;
-import net.lucent.formation_arrays.api.formations.node.IFormationPort;
 import net.lucent.formation_arrays.blocks.block_entities.ModBlockEntities;
 import net.lucent.formation_arrays.formations.FormationCoreItemStackHandler;
-import net.lucent.formation_arrays.formations.node.CoreNodeSlot;
-import net.lucent.formation_arrays.gui.menus.Tier1FormationCoreMenu;
+import net.lucent.formation_arrays.gui.menus.VariedSlotCountFormationCoreMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.UUID;
 
 public class Tier1FormationCoreBlockEntity extends AbstractFormationCoreBlockEntity  {
     public Tier1FormationCoreBlockEntity(BlockPos pos, BlockState blockState, ICoreEnergyContainer energyContainer, FormationCoreItemStackHandler itemStackHandler) {
@@ -27,7 +20,7 @@ public class Tier1FormationCoreBlockEntity extends AbstractFormationCoreBlockEnt
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
         super.createMenu(containerId,playerInventory,player);
-        return new Tier1FormationCoreMenu(containerId,playerInventory,this,dataSlot);
+        return new VariedSlotCountFormationCoreMenu(containerId,playerInventory,this,dataSlot);
 
     }
 

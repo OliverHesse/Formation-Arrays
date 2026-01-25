@@ -7,8 +7,7 @@ import net.lucent.easygui.interfaces.ITextureData;
 import net.lucent.easygui.util.textures.TextureDataSubSection;
 import net.lucent.formation_arrays.FormationArrays;
 import net.lucent.formation_arrays.blocks.blocks.BaseFormationCoreEntityBlock;
-import net.lucent.formation_arrays.gui.easy_gui_screens.Tier1FormationCoreScreen;
-import net.lucent.formation_arrays.gui.menus.AbstractFormationCoreMenu;
+import net.lucent.formation_arrays.gui.easy_gui_screens.VariedSlotCountFormationCoreScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -19,19 +18,19 @@ import net.neoforged.api.distmarker.OnlyIn;
 public class ToggleActiveStateButton extends AbstractButton {
 
     private final ITextureData defaultTexture = new TextureDataSubSection(
-            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/tier_1_formation_core_storage_screen.png"),
+            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/generic_storage_screen.png"),
             256,256,
             180,0,195,16);
     private final ITextureData defaultHoverTexture = new TextureDataSubSection(
-            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/tier_1_formation_core_storage_screen.png"),
+            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/generic_storage_screen.png"),
             256,256,
             180,17,195,33);
     private final ITextureData pressTexture = new TextureDataSubSection(
-            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/tier_1_formation_core_storage_screen.png"),
+            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/generic_storage_screen.png"),
             256,256,
             180,34,195,50);
     private final ITextureData pressHoverTexture = new TextureDataSubSection(
-            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/tier_1_formation_core_storage_screen.png"),
+            ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/generic_storage_screen.png"),
             256,256,
             180,51,195,67);
 
@@ -41,7 +40,7 @@ public class ToggleActiveStateButton extends AbstractButton {
 
     @Override
     public void renderSelf(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        if(((Tier1FormationCoreScreen) getScreen()).getCoreBlockEntity().getBlockState().getValue(BaseFormationCoreEntityBlock.FORMATION_CORE_STATE)){
+        if(((VariedSlotCountFormationCoreScreen) getScreen()).getCoreBlockEntity().getBlockState().getValue(BaseFormationCoreEntityBlock.FORMATION_CORE_STATE)){
             if(isHovered()) defaultHoverTexture.renderTexture(guiGraphics);
             else defaultTexture.renderTexture(guiGraphics);
         }else {
@@ -54,7 +53,7 @@ public class ToggleActiveStateButton extends AbstractButton {
     public void onClick(double mouseX, double mouseY, int button, boolean clicked) {
         super.onClick(mouseX, mouseY, button, clicked);
         if(clicked && button == InputConstants.MOUSE_BUTTON_LEFT){
-            Minecraft.getInstance().gameMode.handleInventoryButtonClick(((Tier1FormationCoreScreen) getScreen()).getMenu().containerId, 0);
+            Minecraft.getInstance().gameMode.handleInventoryButtonClick(((VariedSlotCountFormationCoreScreen) getScreen()).getMenu().containerId, 0);
         }
     }
 }

@@ -301,6 +301,10 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
         }
         node.tick(this,getFormationJadeSlips(node.getFormationId()));
     }
+    @OnlyIn(Dist.CLIENT)
+    public void runFormationRenderer(IFormationNode node){
+        FormationRegistry.FormationRenderers.RENDERERS_REGISTRY.get(node.getFormation().getFormationRenderer()).tick(this,node);
+    }
 
     public void tick(Level level, BlockPos blockPos, BlockState blockState){
         tryRecharge();
@@ -319,6 +323,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
                 for(CoreNodeSlot slot : formationNodeSlots){
                     if(slot.getFormationNode() == null) continue;
                     runFormationNode(level,slot.getFormationNode());
+                    if(FMLLoader.getDist() == Dist.CLIENT) runFormationRenderer(slot.getFormationNode());
                     slot.getFormationNode().setActiveLastTick(true);
                 }
             }else {

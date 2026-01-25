@@ -18,7 +18,6 @@ import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.connec
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.connection_elements.buttons.ConnectionButton;
 import net.lucent.formation_arrays.gui.easy_gui_elemenents.formation_core.connection_elements.buttons.PortButton;
 import net.lucent.formation_arrays.gui.easy_gui_screens.ConnectionScreen;
-import net.lucent.formation_arrays.gui.easy_gui_screens.Tier1FormationCoreScreen;
 import net.lucent.formation_arrays.network.server_bound.UpdateFormationConnectionStatus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

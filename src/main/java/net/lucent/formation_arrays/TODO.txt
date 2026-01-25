@@ -1,7 +1,6 @@
-go through most of the UI stuff and make it reference an Interface screen. this way i can
+
 reuse most of the elements
 
-add a basic core texture
 
 create a custom type object? and they have to register it and pass the registry key?
 

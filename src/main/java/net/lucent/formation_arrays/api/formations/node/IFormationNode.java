@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.lucent.formation_arrays.api.cores.IFormationCore;
 import net.lucent.formation_arrays.api.formations.IFormation;
 import net.lucent.formation_arrays.api.formations.node.connections.IFormationConnection;
-import net.lucent.formation_arrays.blocks.block_entities.formation_cores.AbstractFormationCoreBlockEntity;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -64,11 +64,11 @@ public interface IFormationNode {
         return core.tryBurnEnergy(energy);
     }
 
-    void tick(AbstractFormationCoreBlockEntity blockEntity,List<ItemStack> jadeSlips);
+    void tick(IFormationCore blockEntity,List<ItemStack> jadeSlips);
 
     boolean activeLastTick();
     void setActiveLastTick(boolean activeLastTick);
-    void deactivate(AbstractFormationCoreBlockEntity blockEntity);
+    void deactivate(IFormationCore blockEntity);
 
 
     //Saving and writing data
