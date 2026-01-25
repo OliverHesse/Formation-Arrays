@@ -110,12 +110,13 @@ public class FormationNode implements IFormationNode {
     }
 
     @Override
-    public void tick(IFormationCore blockEntity, List<ItemStack> jadeSlips) {
+    public void tick(Level level,BlockPos pos ,IFormationCore blockEntity, List<ItemStack> jadeSlips) {
 
     }
 
     @Override
     public void encode(RegistryFriendlyByteBuf buf) {
+    
         for(IFormationConnection<?> connection :getFormationConnections()){
             connection.encode(buf);
         }
@@ -140,7 +141,7 @@ public class FormationNode implements IFormationNode {
     }
 
     @Override
-    public void deactivate(IFormationCore blockEntity) {
+    public void deactivate(Level level,BlockPos pos ,IFormationCore blockEntity) {
 
     }
 

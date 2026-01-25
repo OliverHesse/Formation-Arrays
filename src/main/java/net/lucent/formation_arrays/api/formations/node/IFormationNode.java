@@ -64,11 +64,11 @@ public interface IFormationNode {
         return core.tryBurnEnergy(energy);
     }
 
-    void tick(IFormationCore blockEntity,List<ItemStack> jadeSlips);
+    void tick(Level level,BlockPos pos ,IFormationCore blockEntity,List<ItemStack> jadeSlips);
 
     boolean activeLastTick();
     void setActiveLastTick(boolean activeLastTick);
-    void deactivate(IFormationCore blockEntity);
+    void deactivate(Level level,BlockPos pos ,IFormationCore blockEntity);
 
 
     //Saving and writing data

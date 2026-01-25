@@ -84,7 +84,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
 
         for(CoreNodeSlot slot : formationNodeSlots){
             if(slot.getFormationNode() == null) continue;
-            slot.getFormationNode().deactivate(this);
+            slot.getFormationNode().deactivate(getLevel(),getBlockPos(),this);
             slot.setFormationNode(null);
         }
         super.setRemoved();
@@ -98,7 +98,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
         FormationArrays.getCoreManager().removeCore(getBlockPos());
         for(CoreNodeSlot slot : formationNodeSlots){
             if(slot.getFormationNode() == null) continue;
-            slot.getFormationNode().deactivate(this);
+            slot.getFormationNode().deactivate(getLevel(),getBlockPos(),this);
             slot.setFormationNode(null);
         }
     }
@@ -299,11 +299,11 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
         for(IFormationFlagConditionData conditionData : node.getFormation().getFormationFlagConditions()){
             if(!conditionData.isFlagValid(level,getBlockPos())) return;
         }
-        node.tick(this,getFormationJadeSlips(node.getFormationId()));
+        node.tick(getLevel(),getBlockPos(),this ,getFormationJadeSlips(node.getFormationId()));
     }
     @OnlyIn(Dist.CLIENT)
     public void runFormationRenderer(IFormationNode node){
-        FormationRegistry.FormationRenderers.RENDERERS_REGISTRY.get(node.getFormation().getFormationRenderer()).tick(this,node);
+        FormationRegistry.FormationRenderers.RENDERERS_REGISTRY.get(node.getFormation().getFormationRenderer()).tick(getLevel(),getBlockPos(),this,node);
     }
 
     public void tick(Level level, BlockPos blockPos, BlockState blockState){
@@ -346,7 +346,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
             //TODO make more efficient by adding activeLastTick to core so this only needs to run once
             for(CoreNodeSlot slot : formationNodeSlots){
                 if(slot.getFormationNode() == null) continue;
-                if(slot.getFormationNode().activeLastTick()) slot.getFormationNode().deactivate(this);
+                if(slot.getFormationNode().activeLastTick()) slot.getFormationNode().deactivate(getLevel(),getBlockPos(),this);
                 slot.getFormationNode().setActiveLastTick(false);
             }
 
