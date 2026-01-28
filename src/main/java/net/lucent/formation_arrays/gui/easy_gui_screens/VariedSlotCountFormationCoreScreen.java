@@ -18,9 +18,9 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class VariedSlotCountFormationCoreScreen extends EasyGuiContainerScreen<VariedSlotCountFormationCoreMenu> {
+public class VariedSlotCountFormationCoreScreen<T extends VariedSlotCountFormationCoreMenu> extends EasyGuiContainerScreen<T> {
     public final View view;
-    public VariedSlotCountFormationCoreScreen(VariedSlotCountFormationCoreMenu menu, Inventory playerInventory, Component title) {
+    public VariedSlotCountFormationCoreScreen(T menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         View view = new View(this);
         view.setUseMinecraftScale(true);
