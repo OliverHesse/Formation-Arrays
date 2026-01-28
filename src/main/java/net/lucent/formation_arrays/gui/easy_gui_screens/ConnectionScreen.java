@@ -18,9 +18,7 @@ public class ConnectionScreen extends EasyGuiScreen {
     public ConnectionScreen(Component title,AbstractFormationCoreBlockEntity blockEntity, int slot) {
         super(title);
         View view = new View(this);
-        view.setUseMinecraftScale(false);
-        view.useCustomScaling = true;
-        view.setCustomScale(3);
+        view.setUseMinecraftScale(true);
         addView(view);
         this.blockEntity = blockEntity;
         this.formationSlot = slot;
@@ -29,7 +27,7 @@ public class ConnectionScreen extends EasyGuiScreen {
         renderable.setFormationNode(node);
         view.addChild(renderable);
 
-        System.out.println("trying to create screen");
+
 
     }
     public AbstractFormationCoreBlockEntity getCoreBlockEntity(){return this.blockEntity;}

@@ -23,9 +23,8 @@ public class VariedSlotCountFormationCoreScreen extends EasyGuiContainerScreen<V
     public VariedSlotCountFormationCoreScreen(VariedSlotCountFormationCoreMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         View view = new View(this);
-        view.setUseMinecraftScale(false);
-        view.useCustomScaling = true;
-        view.setCustomScale(3);
+        view.setUseMinecraftScale(true);
+
         addView(view);
         view.addChild(new FormationCoreInventoryPanel(this,new TextureDataSubSection(
                 ResourceLocation.fromNamespaceAndPath(FormationArrays.MOD_ID,"textures/gui/formation_cores/basic_cores/generic_storage_screen.png"),
