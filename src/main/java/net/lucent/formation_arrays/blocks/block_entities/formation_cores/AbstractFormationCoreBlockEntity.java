@@ -40,6 +40,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
@@ -57,6 +58,9 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
 
     public final ICoreEnergyContainer energyContainer;
     public final FormationCoreItemStackHandler formationItemStackHandler;
+    public boolean syncedStateToClient = false;
+
+
     public ContainerData dataSlot = new ContainerData() {
         @Override
         public int get(int index) {
@@ -115,6 +119,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
         }
         FormationArrays.getCoreManager().addCore(pos);
         if(FMLLoader.getDist() == Dist.CLIENT) NeoForge.EVENT_BUS.addListener(this::onRenderLevel);
+
     }
 
     public FormationCoreItemStackHandler getFormationItemStackHandler(){
@@ -307,6 +312,9 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
     }
 
     public void tick(Level level, BlockPos blockPos, BlockState blockState){
+        if(!syncedStateToClient){
+            level.setBlock(blockPos,blockState.setValue(BaseFormationCoreEntityBlock.FORMATION_CORE_STATE,blockState.getValue(BaseFormationCoreEntityBlock.FORMATION_CORE_STATE)),Block.UPDATE_ALL_IMMEDIATE);
+        }
         tryRecharge();
 
         /*
