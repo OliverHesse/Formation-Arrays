@@ -313,6 +313,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
 
     public void tick(Level level, BlockPos blockPos, BlockState blockState){
         if(!syncedStateToClient){
+            sendSyncPacket();
             level.setBlock(blockPos,blockState.setValue(BaseFormationCoreEntityBlock.FORMATION_CORE_STATE,blockState.getValue(BaseFormationCoreEntityBlock.FORMATION_CORE_STATE)),Block.UPDATE_ALL_IMMEDIATE);
         }
         tryRecharge();
