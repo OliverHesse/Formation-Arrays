@@ -115,7 +115,7 @@ configurations {
 dependencies {
 
     //implementation "net.lucent.easygui:easy_gui_1.21.1:1.0.7"
-    implementation 'com.github.OliverHesse:EasyGui:464b51e773'
+    implementation 'com.github.OliverHesse:EasyGui:0647d9be00'
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
