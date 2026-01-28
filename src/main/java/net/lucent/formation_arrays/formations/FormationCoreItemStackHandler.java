@@ -66,14 +66,7 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
         }
         return ItemStack.EMPTY;
     }
-    public void printSlots(){
-        System.out.println("printing slots");
-        System.out.println("client?: "+entity.getLevel().isClientSide());
-        for(int i=0;i<getSlots();i++){
-            System.out.println(getStackInSlot(i).toString());
-        }
-        System.out.println("finished printing slots");
-    }
+
     public ItemStack getControlToken(){
         return getStackInSlot(ACCESS_CONTROL_TOKEN_SLOT);
     }

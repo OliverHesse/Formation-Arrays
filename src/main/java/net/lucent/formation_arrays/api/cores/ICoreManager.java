@@ -16,7 +16,7 @@ public interface ICoreManager {
     void addCore(BlockPos blockPos);
 
     default Set<BlockPos> getNearbyCores(Level level, BlockPos origin, double radius){
-        System.out.println("trying to get nearby cores");
+
         //some basic checks to stop crashes
         if(level.getBlockEntity(origin) == null ||!(level.getBlockEntity(origin) instanceof IFormationCore originCore)) return Set.of();
 

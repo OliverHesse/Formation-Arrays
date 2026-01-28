@@ -48,7 +48,7 @@ public class PlayerAccessToken implements IAccessControlToken {
         if(!isLinked(controlToken)) return;
 
         if(!player.getUUID().toString().equals(getOwnerId(controlToken)) || getPermissionLevel(controlToken)+value <0) return;
-        System.out.println("control Token value updated");
+
         controlToken.set(ModDataComponents.ACCESS_CONTROL_DATA_COMPONENT,new AccessTokenComponent(getOwnerId(controlToken),getDisplayName(controlToken),getPermissionLevel(controlToken)+value));
 
     }

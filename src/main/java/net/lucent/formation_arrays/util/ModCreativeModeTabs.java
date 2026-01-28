@@ -27,7 +27,7 @@ public class ModCreativeModeTabs {
 
 
     public static void register(IEventBus eventBus) {
-        System.out.println("registering creative mode tabs");
+
         CREATIVE_MODE_TAB.register(eventBus);
     }
 }

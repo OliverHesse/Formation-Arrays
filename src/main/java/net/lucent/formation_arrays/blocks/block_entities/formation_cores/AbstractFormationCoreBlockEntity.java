@@ -166,10 +166,9 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
 
 
     public IFormationNode getFormationNode(UUID id){
-        System.out.println("trying to find foramtion with id"+id.toString());
+
         for(CoreNodeSlot slot : formationNodeSlots){
             if(slot == null) continue;
-            System.out.println("checking slot : "+slot.getFormationNode().getFormationId());
             if(slot.getFormationNode().getFormationId().equals(id)) return slot.getFormationNode();
         }
         return null;
@@ -375,7 +374,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
         @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        System.out.println("SAVING BE STORAGE");
+
         tag.put("inventory",formationItemStackHandler.serializeNBT(registries));
         getEnergyContainer().increaseEnergy(tag.getInt("energy"));
         ListTag coreSlots = new ListTag();

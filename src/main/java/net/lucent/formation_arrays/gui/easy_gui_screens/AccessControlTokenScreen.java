@@ -11,11 +11,10 @@ import net.neoforged.api.distmarker.OnlyIn;
 public class AccessControlTokenScreen extends EasyGuiScreen {
     public AccessControlTokenScreen(Component title) {
         super(title);
-        System.out.println("creating screen for token");
+
         View view = new View(this);
-        view.setUseMinecraftScale(false);
-        view.useCustomScaling = true;
-        view.setCustomScale(3);
+        view.setUseMinecraftScale(true);
+
         addView(view);
 
         view.addChild(new ControlTokenPanel(this));

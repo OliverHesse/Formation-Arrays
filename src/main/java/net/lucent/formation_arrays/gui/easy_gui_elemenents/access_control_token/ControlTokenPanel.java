@@ -29,20 +29,20 @@ public class ControlTokenPanel extends EmptyContainer {
     IAccessControlToken controlToken;
 
     public ControlTokenPanel(IEasyGuiScreen screen){
-        super(screen,-44,-68,137,88);
-        System.out.println("creating panel");
+        super(screen,-68,-44,137,88);
+
         setXPositioning(Positioning.CENTER);
         setYPositioning(Positioning.CENTER);
-        System.out.println("creating btn");
+
         addChild(new ChangeValueButton(screen,9,29,180,-1));
         addChild(new ChangeValueButton(screen,95,29,0,1));
-        System.out.println("creating label");
+
         accessLevelLabel = new Label(screen,0,0, Component.empty());
         accessLevelLabel.centered = true;
         accessLevelLabel.setXPositioning(Positioning.CENTER);
         accessLevelLabel.setYPositioning(Positioning.CENTER);
         addChild(accessLevelLabel);
-        System.out.println("setting up item");
+
 
     }
 

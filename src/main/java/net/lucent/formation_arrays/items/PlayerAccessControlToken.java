@@ -43,11 +43,9 @@ public class PlayerAccessControlToken extends Item {
 
         if(level.isClientSide() && !player.isShiftKeyDown()) return InteractionResultHolder.fail(item);
         if(capability.isLinked(item) && !level.isClientSide()) {
-            System.out.println("is linked try to open screen");
-            System.out.println(player.getUUID());
-            System.out.println(capability.getOwnerId(item));
+
             if(player.getUUID().toString().equals(capability.getOwnerId(item))) {
-                System.out.println("CREATE");
+
                 PacketDistributor.sendToPlayer((ServerPlayer) player,new OpenAccessControlScreen());
 
             };

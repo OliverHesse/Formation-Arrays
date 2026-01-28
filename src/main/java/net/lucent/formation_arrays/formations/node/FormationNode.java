@@ -151,10 +151,10 @@ public class FormationNode implements IFormationNode {
     public CompoundTag save(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
         ListTag connectionListTag = new ListTag();
-        System.out.println("saving formation node data");
+
         for (IFormationConnection<?> connection : getFormationConnections()){
             if(connection.getCoreLocation() == null) continue;
-            System.out.println("Saving connection data");
+
             CompoundTag connectionTag = new CompoundTag();
             connectionTag.putString("connection_id",connection.getConnectionId());
             connectionTag.put("core_pos", NBTUtil.blockPos(connection.getCoreLocation()));
@@ -169,10 +169,9 @@ public class FormationNode implements IFormationNode {
 
     @Override
     public void read(CompoundTag tag, HolderLookup.Provider registries) {
-        System.out.println("loading formation node data");
+
         ListTag connectionListTag = tag.getList("connection_data", Tag.TAG_COMPOUND);
         for(int i = 0;i<connectionListTag.size();i++){
-            System.out.println("loading formation connection");
             CompoundTag connectionTag = connectionListTag.getCompound(i);
             IFormationConnection<?> connection = getFormationConnection(connectionTag.getString("connection_id"));
             connection.setConnectionPort(connectionTag.getString("port_id"));

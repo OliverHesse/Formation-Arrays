@@ -101,7 +101,7 @@ public record UpdateFormationConnectionStatus(ConnectionData connectionData,Port
             connection.setCoreLocation(payload.portData.portCore);
             originCore.formationNodeSlots[payload.connectionData.formationSlot].markDirty();
             originCore.setChanged();
-            System.out.println("connected cores");
+
             context.player().sendSystemMessage(
                     Component.literal("CONNECTED ").append(connection.getName()).append(" TO ").append(port.getName())
             );

@@ -110,7 +110,7 @@ public class DefaultFormationConnection<T> implements IFormationConnection<T> {
         if(data.isEmpty()) return defaultValue;
 
         return  data.map(d -> (T) d).orElseGet(() -> {
-                    System.out.println("unable to cast");
+
                     LoggerUtils.sameTypeCastingError(
                             getConnectionPort(),
                             getConnectionId(),

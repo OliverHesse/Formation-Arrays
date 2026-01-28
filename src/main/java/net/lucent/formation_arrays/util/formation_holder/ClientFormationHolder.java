@@ -22,16 +22,12 @@ public class ClientFormationHolder implements IClientFormationsHolder {
     public void addFormations(List<UpdateNearbyFormations.PacketDataInstance> packetDataInstances){
         for(UpdateNearbyFormations.PacketDataInstance instance : packetDataInstances){
             IFormation formationHolder = FormationRegistry.FORMATION_REGISTRY.get(ResourceLocation.bySeparator(instance.formationKey(),':'));
-            System.out.println("trying to create formation");
-            System.out.println(instance.formationKey());
-            System.out.println(instance.formationUUID());
 
             IFormationNode newNode = formationHolder.getNewFormationNode(instance.coreLocation(), UUID.fromString(instance.formationUUID()));
             if(!dirtyCores.contains(instance.coreLocation())){
                 cores.put(instance.coreLocation(),new HashMap<>());
                 dirtyCores.add(instance.coreLocation());
             }
-            System.out.println(newNode.getFormationId());
 
             cores.get(instance.coreLocation()).put(instance.formationUUID(),new AvailableFormation(instance.ownerId(), instance.permissionLevel(), newNode,instance.coreLocation()));
         }

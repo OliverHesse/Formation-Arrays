@@ -43,7 +43,7 @@ public record RequestNearbyFormationsPayload(BlockPos blockPos) implements Custo
             for(BlockPos core : cores){
                 if(context.player().level().getBlockEntity(core) instanceof IFormationCore otherCore){
                     for (UUID formationID : otherCore.getFormationNodeIDs()){
-                        System.out.println(formationID);
+
                         ResourceLocation key = otherCore.getFormationRegistryId(formationID);
                         packet.add(new UpdateNearbyFormations.PacketDataInstance(
                                 otherCore.getOwnerId(),

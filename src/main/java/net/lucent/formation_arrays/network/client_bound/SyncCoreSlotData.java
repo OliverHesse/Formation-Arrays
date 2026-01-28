@@ -74,13 +74,11 @@ public record SyncCoreSlotData(BlockPos core, boolean empty, String uuid, String
                 for(ConnectionSyncData syncData : payload.connectionSyncData()){
 
                     IFormationConnection<?> connection = node.getFormationConnection(syncData.connectionId());
-                    System.out.println("syncing connection data for :" + connection.getConnectionId());
-                    System.out.println("syncing to :"+syncData.portId);
+
                     connection.setCoreLocation(syncData.core);
                     connection.setFormationId(UUID.fromString(syncData.formationId()));
                     connection.setConnectionPort(syncData.portId);
                 }
-                System.out.println("connected to : "+coreBlockEntity.formationNodeSlots[payload.slot].getFormationNode().getFormationConnection("grab_data").getConnectionPort());
 
             }
         });
