@@ -302,6 +302,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
     }
     @OnlyIn(Dist.CLIENT)
     public void runFormationRenderer(IFormationNode node){
+        if(node.getFormation().getFormationRenderer() == null) return;
         FormationRegistry.FormationRenderers.RENDERERS_REGISTRY.get(node.getFormation().getFormationRenderer()).tick(getLevel(),getBlockPos(),this,node);
     }
 
