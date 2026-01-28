@@ -29,7 +29,7 @@ public abstract class AbstractFormationCoreMenu extends AbstractContainerMenu {
     private final AbstractFormationCoreBlockEntity coreBlockEntity;
     private final ContainerData data;
     private final Inventory inventory;
-    public boolean canModify;
+    public boolean canModify = true;
     protected AbstractFormationCoreMenu(@Nullable MenuType<?> menuType, int containerId, Inventory inventory, AbstractFormationCoreBlockEntity blockEntity, ContainerData dataSlot) {
         super(menuType, containerId);
         this.coreBlockEntity = blockEntity;
