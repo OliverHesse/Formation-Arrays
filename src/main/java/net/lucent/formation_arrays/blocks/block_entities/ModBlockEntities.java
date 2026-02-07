@@ -22,7 +22,7 @@ public class ModBlockEntities {
                     (blockPos,blockState)->new Tier1FormationCoreBlockEntity(
                             blockPos,
                             blockState,
-                            new CappedEnergyContainer(1000),
+                            new CappedEnergyContainer(100000),
                             new FormationCoreItemStackHandler(1,1,3)
                     ), ModBlocks.TIER_1_FORMATION_CORE.get()).build(null));
 
