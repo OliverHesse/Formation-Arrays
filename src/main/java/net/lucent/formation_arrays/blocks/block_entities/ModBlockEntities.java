@@ -3,6 +3,7 @@ package net.lucent.formation_arrays.blocks.block_entities;
 import net.lucent.formation_arrays.FormationArrays;
 import net.lucent.formation_arrays.blocks.ModBlocks;
 import net.lucent.formation_arrays.blocks.block_entities.formation_cores.Tier1FormationCoreBlockEntity;
+import net.lucent.formation_arrays.blocks.block_entities.formation_cores.Tier2FormationCoreBlockEntity;
 import net.lucent.formation_arrays.formations.FormationCoreItemStackHandler;
 import net.lucent.formation_arrays.formations.energy_containers.CappedEnergyContainer;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -25,6 +26,14 @@ public class ModBlockEntities {
                             new CappedEnergyContainer(100000),
                             new FormationCoreItemStackHandler(1,1,3)
                     ), ModBlocks.TIER_1_FORMATION_CORE.get()).build(null));
+    public static  final Supplier<BlockEntityType<Tier2FormationCoreBlockEntity>> TIER_2_FORMATION_CORE_BE =
+            BLOCK_ENTITIES.register("tier_2_formation_core_be",() -> BlockEntityType.Builder.of(
+                    (blockPos,blockState)->new Tier2FormationCoreBlockEntity(
+                            blockPos,
+                            blockState,
+                            new CappedEnergyContainer(100000),
+                            new FormationCoreItemStackHandler(1,3,3)
+                    ), ModBlocks.TIER_2_FORMATION_CORE.get()).build(null));
 
     public static void register(IEventBus eventBus){
 

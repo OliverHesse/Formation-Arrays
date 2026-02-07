@@ -15,8 +15,8 @@ public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(Registries.MENU, FormationArrays.MOD_ID);
 
-    public static final DeferredHolder<MenuType<?>, MenuType<VariedSlotCountFormationCoreMenu>> TIER_1_FORMATION_CORE_MENU =
-            registerMenuType("tier_1_formation_core_menu", VariedSlotCountFormationCoreMenu::new);
+    public static final DeferredHolder<MenuType<?>, MenuType<VariedSlotCountFormationCoreMenu>> VARIED_SLOT_COUNT_FORMATION_CORE_MENU =
+            registerMenuType("varied_slot_count_formation_core_menu", VariedSlotCountFormationCoreMenu::new);
 
 
 

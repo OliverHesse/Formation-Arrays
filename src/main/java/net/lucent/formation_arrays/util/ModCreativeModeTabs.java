@@ -22,6 +22,7 @@ public class ModCreativeModeTabs {
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.PLAYER_ACCESS_CONTROL_TOKEN.get());
                         output.accept(ModBlocks.TIER_1_FORMATION_CORE.get());
+                        output.accept(ModBlocks.TIER_2_FORMATION_CORE.get());
                     }).build());
 
 

@@ -15,5 +15,6 @@ public class lang extends LanguageProvider {
         //items
         add("item.formation_arrays.player_access_control_token", "Player Access Token");
         add("block.formation_arrays.tier_1_formation_core","[TIER 1] Formation Core");
+        add("block.formation_arrays.tier_2_formation_core","[TIER 2] Formation Core");
     }
 }

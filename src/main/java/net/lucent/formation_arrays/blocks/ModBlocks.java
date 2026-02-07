@@ -27,7 +27,13 @@ public class ModBlocks {
                     .noOcclusion()
                     .sound(SoundType.ANVIL), (blockPos,blockState)->ModBlockEntities.TIER_1_FORMATION_CORE_BE.get().create(blockPos,blockState)));
 
-
+    public static final DeferredBlock<Block> TIER_2_FORMATION_CORE = registerBlock("tier_2_formation_core",
+            ()->new BaseFormationCoreEntityBlock(BlockBehaviour.Properties.of()
+                    .strength(2f)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()
+                    .sound(SoundType.ANVIL),((pos, blockState) -> ModBlockEntities.TIER_2_FORMATION_CORE_BE.get().create(pos,blockState))
+            ));
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name,block);
         registerBlockItems(name,toReturn);

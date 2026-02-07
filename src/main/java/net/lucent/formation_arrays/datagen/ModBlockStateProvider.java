@@ -17,6 +17,7 @@ public class ModBlockStateProvider  extends BlockStateProvider {
 
         //TODO change because array core will be a block entity
         blockWithItem(ModBlocks.TIER_1_FORMATION_CORE);
+        blockWithItem(ModBlocks.TIER_2_FORMATION_CORE);
     }
 
 

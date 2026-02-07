@@ -1,6 +1,8 @@
 package net.lucent.formation_arrays.datagen;
 
 import net.lucent.formation_arrays.FormationArrays;
+import net.lucent.formation_arrays.blocks.ModBlocks;
+import net.lucent.formation_arrays.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -18,6 +20,9 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
-
+        tag(ModTags.Blocks.FORMATION_CORE).add(
+                ModBlocks.TIER_1_FORMATION_CORE.get(),
+                ModBlocks.TIER_2_FORMATION_CORE.get()
+        );
     }
 }

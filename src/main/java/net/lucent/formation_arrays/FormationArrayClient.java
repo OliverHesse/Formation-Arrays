@@ -17,7 +17,7 @@ public class FormationArrayClient {
     public static class ClientEvents{
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
-            event.register(ModMenuTypes.TIER_1_FORMATION_CORE_MENU.get(), VariedSlotCountFormationCoreScreen::new);
+            event.register(ModMenuTypes.VARIED_SLOT_COUNT_FORMATION_CORE_MENU.get(), VariedSlotCountFormationCoreScreen::new);
 
         }
 

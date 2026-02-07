@@ -1,0 +1,37 @@
+package net.lucent.formation_arrays.blocks.block_entities.formation_cores;
+
+import net.lucent.formation_arrays.api.cores.ICoreEnergyContainer;
+import net.lucent.formation_arrays.blocks.block_entities.ModBlockEntities;
+import net.lucent.formation_arrays.formations.FormationCoreItemStackHandler;
+import net.lucent.formation_arrays.gui.menus.VariedSlotCountFormationCoreMenu;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class Tier2FormationCoreBlockEntity extends AbstractFormationCoreBlockEntity  {
+    public Tier2FormationCoreBlockEntity(BlockPos pos, BlockState blockState, ICoreEnergyContainer energyContainer, FormationCoreItemStackHandler itemStackHandler) {
+        super(ModBlockEntities.TIER_2_FORMATION_CORE_BE.get(), pos, blockState, energyContainer, itemStackHandler);
+
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+        super.createMenu(containerId,playerInventory,player);
+        return new VariedSlotCountFormationCoreMenu(containerId,playerInventory,this,dataSlot);
+
+    }
+
+
+    @Override
+    public int getDetectionRadius() {
+        return 32;
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.empty();
+    }
+}

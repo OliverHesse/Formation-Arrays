@@ -1,4 +1,7 @@
-// 1.21.1	2026-01-20T17:32:44.4463136	Block States: formation_arrays
+// 1.21.1	2026-02-07T03:24:54.083472	Block States: formation_arrays
 2c3d175db5fa5e2c031d0c882fc34f60a189d96a assets/formation_arrays/blockstates/tier_1_formation_core.json
+a7a1dc2f3c0d37759968383498b1f1989b0327ab assets/formation_arrays/blockstates/tier_2_formation_core.json
 baa8f9aae038e17e5f95e6fc9168058a9ae532ed assets/formation_arrays/models/block/tier_1_formation_core.json
+059d374eb1757dfe2a3e7a7c4f74f643dc1d8b02 assets/formation_arrays/models/block/tier_2_formation_core.json
 1c26f26a089b429a6bde7f1b7f9ecd30e0d28675 assets/formation_arrays/models/item/tier_1_formation_core.json
+edeba3e0de112d1d57151929a7de74b87e8f194d assets/formation_arrays/models/item/tier_2_formation_core.json
