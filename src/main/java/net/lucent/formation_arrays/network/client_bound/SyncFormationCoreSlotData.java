@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.UUID;
@@ -55,6 +56,14 @@ public record SyncFormationCoreSlotData(BlockPos core, IFormationNode node,int s
         context.enqueueWork(()-> {
                 if(context.player().level().getBlockEntity(payload.core()) instanceof AbstractFormationCoreBlockEntity coreBlockEntity){
                     ItemStack itemStack = coreBlockEntity.getFormationItemStackHandler().getFormationItemStack(payload.slot);
+                    if(coreBlockEntity.formationNodeSlots[payload.slot].getFormationNode() != null){
+                        coreBlockEntity.formationNodeSlots[payload.slot].getFormationNode().deactivate(
+                                coreBlockEntity.getLevel(),
+                                coreBlockEntity.getBlockPos(),
+                                coreBlockEntity
+                        );
+                        NeoForge.EVENT_BUS.unregister(coreBlockEntity.formationNodeSlots[payload.slot].getFormationNode());
+                    }
                     coreBlockEntity.formationNodeSlots[payload.slot].setFormationNode(payload.node);
                     coreBlockEntity.formationNodeSlots[payload.slot].setItemStack(itemStack);
                 }

@@ -90,17 +90,17 @@ public class FormationCoreItemStackHandler extends ItemStackHandler {
         if(formationHolder ==null) return null;
         return formationHolder.getFormation(item);
     }
-        @Override
-        protected void onContentsChanged(int slot) {
-            entity.setChanged();
+    @Override
+    protected void onContentsChanged(int slot) {
+        entity.setChanged();
 
-            if (!entity.getLevel().isClientSide()) {
-                entity.getLevel().sendBlockUpdated(entity.getBlockPos(),entity.getBlockState(),entity.getBlockState(),3);
-                if(FORMATION_SLOTS.contains(slot)){
-                    entity.updateFormationSlot(FORMATION_SLOTS.indexOf(slot));
-                }
+        if (!entity.getLevel().isClientSide()) {
+            entity.getLevel().sendBlockUpdated(entity.getBlockPos(),entity.getBlockState(),entity.getBlockState(),3);
+            if(FORMATION_SLOTS.contains(slot)){
+                entity.updateFormationSlot(FORMATION_SLOTS.indexOf(slot));
             }
         }
+    }
 
 
 

@@ -131,6 +131,7 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
     public void updateFormationSlot(int slot){
         ItemStack itemStack = formationItemStackHandler.getFormationItemStack(slot);
         if(itemStack == null || itemStack.equals(ItemStack.EMPTY)) {
+            if(formationNodeSlots[slot].getFormationNode() != null) formationNodeSlots[slot].getFormationNode().deactivate(getLevel(),getBlockPos(),this);
             formationNodeSlots[slot].empty();
             sendSyncPacket();
             return;
@@ -139,6 +140,10 @@ public abstract class AbstractFormationCoreBlockEntity extends BlockEntity imple
         if(formationNodeSlots[slot].getItemStack() == itemStack) return;
 
         //we have a new item
+        if(formationNodeSlots[slot].getFormationNode() != null) {
+            formationNodeSlots[slot].getFormationNode().deactivate(getLevel(),getBlockPos(),this);
+            NeoForge.EVENT_BUS.unregister(formationNodeSlots[slot].getFormationNode());
+        }
         formationNodeSlots[slot].setFormationNode(nodeFromItemStack(slot));
         formationNodeSlots[slot].setItemStack(itemStack);
         setChanged();
